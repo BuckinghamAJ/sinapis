@@ -1,0 +1,15 @@
+{% load static %}
+{% load static tailwind_tags %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Daily God</title>
+        <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/sidebar.css' %}">
+        {% tailwind_css %}
+    </head>
+    <body>
+            {% block content %}
+            {% endblock %}
+    </body>
+</html>
