@@ -56,6 +56,8 @@ INSTALLED_APPS = [
     'taggit',
     'tailwind',
     'theme',
+    "crispy_forms",
+    "crispy_tailwind",
     'django_htmx',
     'django_browser_reload',
     'django.contrib.admin',
@@ -222,10 +224,15 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 TAILWIND_APP_NAME = 'theme'
 
+CRISPY_ALLOWED_TEMPLATE_PACKS = "tailwind"
+
+CRISPY_TEMPLATE_PACK = "tailwind"
 
 INTERNAL_IPS = [
     "127.0.0.1",
 ]
+
+
 
 # TODO: Add Following Packages for Prod:
 # django-defender

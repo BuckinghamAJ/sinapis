@@ -1,12 +1,16 @@
 from django.shortcuts import render
 from posts.models import Post
+from posts.forms import PostForm
 from quotes.models import Quote
 from prayers.models import Prayer
+
 
 from itertools import chain
 # Create your views here.
 
 def home(request):
+
+    post_form = PostForm()
 
     try:
         latest_posts = Post.objects.order_by('-created_at')[:50]
@@ -26,7 +30,8 @@ def home(request):
     content = [c for c in chain(latest_posts, latest_quotes, latest_prayers) if c]
 
     context = {
-        'content': content
+        'content': content,
+        'post_form': post_form,
     }
 
     return render(request, 'index.html', context=context)
