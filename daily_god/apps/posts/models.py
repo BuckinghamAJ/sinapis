@@ -8,6 +8,7 @@ class Post(models.Model):
     title = models.CharField(max_length=200)
     summary = models.TextField()
     url = models.URLField()
+    image_url = models.URLField(null=True, blank=True)
     author = models.CharField(max_length=255)
     posted_by = models.ForeignKey(User, on_delete=models.CASCADE)  
     loves = models.PositiveIntegerField(default=0)

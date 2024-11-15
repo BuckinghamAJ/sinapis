@@ -1,0 +1,15 @@
+<div class="card bg-base-100 w-96 shadow-xl mx-6">
+    <figure>
+        <img
+            src="{% static '/img/prayer_img.jpg' %}"
+            alt="prayer" />
+    </figure>
+    <div class="card-body">
+        <p>{{prayer.content}}</p>
+        <div class="card-actions justify-end">
+            {% for tag in prayer.tags.all %}
+                <div class="badge badge-outline">{{ tag }}</div>
+            {% endfor %}
+        </div>
+    </div>
+</div>

@@ -1,26 +1,16 @@
+{% load _extras %}
 
 <div class="m-2 flex flex-wrap">
     {% for c in content %}
-    <div class="card bg-base-100 w-96 shadow-xl mx-6">
-        <figure>
-        <img
-            src="#"
-            alt="Shoes" />
-        </figure>
-        <div class="card-body">
-        <h2 class="card-title">
-            {% if c.title %}
-                {{ c.title }}
+        {% with obj_name=c|class_name %}
+            {% if obj_name == 'Post' %}
+                {% include 'components/post_content.html' with post=c %}
+            {% elif obj_name == 'Prayer' %}
+                {% include 'components/prayer_content.html' with prayer=c %}
+            {% elif obj_name == 'Quote' %}
+                {% include 'components/quote_content.html' with quote=c %}
             {% endif %}
-        </h2>
-        <p>{{c.content}}</p>
-        <div class="card-actions justify-end">
-            {% for tag in c.tags.all %}
-                <div class="badge badge-outline">{{ tag }}</div>
-            {% endfor %}
-        </div>
-        </div>
-    </div>
+        {% endwith %}
     {% endfor %}
 </div>
 

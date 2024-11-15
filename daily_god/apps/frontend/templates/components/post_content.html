@@ -1,0 +1,22 @@
+<div class="card bg-base-100 w-96 shadow-xl mx-6">
+    {% if post.image_url %}
+        <figure>
+            <img
+                src="{{ post.image_url }}"
+                alt="{{ post.title }}" />
+        </figure>
+    {% endif %}
+    <div class="card-body">
+        <h2 class="card-title">
+            {% if post.title %}
+                {{ post.title }}
+            {% endif %}
+        </h2>
+        <p>{{post.content}}</p>
+        <div class="card-actions justify-end">
+            {% for tag in post.tags.all %}
+                <div class="badge badge-outline">{{ tag }}</div>
+            {% endfor %}
+        </div>
+    </div>
+</div>

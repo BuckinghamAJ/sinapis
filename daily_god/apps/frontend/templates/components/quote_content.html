@@ -1,0 +1,10 @@
+<div class="card bg-base-100 w-96 shadow-xl mx-6">
+    <div class="card-body">
+        <p>{{quote.content}}</p>
+        <div class="card-actions justify-end">
+            {% for tag in quote.tags.all %}
+                <div class="badge badge-outline">{{ tag }}</div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
