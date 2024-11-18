@@ -13,17 +13,17 @@ def home(request):
     post_form = PostForm()
 
     try:
-        latest_posts = Post.objects.order_by('-created_at')[:50]
+        latest_posts = Post.objects.filter(is_approved=True).order_by('-created_at')[:50]
     except Post.DoesNotExist:
         latest_posts = []
 
     try:
-        latest_quotes = Quote.objects.order_by('-created_at')[:50]
+        latest_quotes = Quote.objects.filter(is_approved=True).order_by('-created_at')[:50]
     except Quote.DoesNotExist:
         latest_quotes = []
 
     try:
-        latest_prayers = Prayer.objects.order_by('-created_at')[:50]
+        latest_prayers = Prayer.objects.filter(is_approved=True).order_by('-created_at')[:50]
     except Prayer.DoesNotExist:
         latest_prayers = []
 
