@@ -7,11 +7,6 @@
             alt="prayer" />
     </figure>
     <div class="card-body">
-        <p>{{prayer.content}}</p>
-        <div class="card-actions justify-end">
-            {% for tag in prayer.tags.all %}
-                <div class="badge badge-outline">{{ tag }}</div>
-            {% endfor %}
-        </div>
+        <p class="font-sans font-semibold">{{prayer.content}}</p>
     </div>
 </div>

@@ -1,10 +1,17 @@
-<div class="card bg-base-100 w-96 shadow-xl mx-6">
+{% load static %}
+{% load _extras %}
+
+{% if 'Meditation'|check_tag:quote %}
+    <div class="card bg-base-100 w-96 image-full shadow-xl mx-6">
+        <figure>
+            <img
+                src="{% static '/img/meditation_img.jpg' %}"
+                alt="meditation" />
+        </figure>
+{% else %}
+    <div class="card bg-base-100 w-96 shadow-xl mx-6">
+{% endif %}
     <div class="card-body">
-        <p>{{quote.content}}</p>
-        <div class="card-actions justify-end">
-            {% for tag in quote.tags.all %}
-                <div class="badge badge-outline">{{ tag }}</div>
-            {% endfor %}
-        </div>
+        <p class="font-sans font-semibold">{{quote.content}}</p>
     </div>
 </div>
