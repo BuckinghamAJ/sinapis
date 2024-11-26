@@ -3,10 +3,10 @@
 <dialog id="new_post_model" class="modal">
     <div class="modal-box">
         <form method="post">
+            <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
             {% csrf_token %}
             {{ post_form|crispy }}
           <!-- if there is a button in form, it will close the modal -->
-          <button class="btn">Close</button>
         </form>
     </div>
 </dialog>

@@ -12,14 +12,13 @@ class Post(models.Model):
     author = models.CharField(max_length=255)
     posted_by = models.ForeignKey(User, on_delete=models.CASCADE)  
     loves = models.PositiveIntegerField(default=0)
-    tags = TaggableManager()
-    comments = models.ManyToManyField(Comment, related_name='posts')
-    content = models.TextField()
+    tags = TaggableManager(blank=True)
+    comments = models.ManyToManyField(Comment, related_name='posts', 
+                                     blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     is_pending = models.BooleanField(default=True)
     is_approved = models.BooleanField(default=False)
-    published = models.BooleanField(default=False)
     
 
     def __str__(self):
