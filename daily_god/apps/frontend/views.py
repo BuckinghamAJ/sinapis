@@ -35,3 +35,21 @@ def home(request):
     }
 
     return render(request, 'index.html', context=context)
+
+
+
+
+def get_post(request, id):
+    try:
+        post = Post.objects.get(id=id)
+    except Post.DoesNotExist:
+        post = None
+    
+    if post:
+        context = {
+            'post': post,
+        }
+        return render(request, 'components/post_modal.html', context=context)
+
+
+    return 

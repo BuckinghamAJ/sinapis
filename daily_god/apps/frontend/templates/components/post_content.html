@@ -1,22 +1,44 @@
-<div class="card bg-base-100 w-96 shadow-xl mx-6">
-    {% if post.image_url %}
-        <figure>
-            <img
+<!-- TODO: Utilize htmx to make a modal for click on a post -->
+
+<a hx-get="post/{{post.id}}"
+    hx-target="#my_post_content"
+    hx-trigger="click"
+    hx-swap="outerHTML"
+    hx-push-url="false"
+    >
+    <div class="card card-compact bg-base-100 w-80 h-80 shadow-xl mx-6 hover:shadow-gold-glow">
+        {% if post.image_url %}
+            <img class="object-cover h-60"
                 src="{{ post.image_url }}"
                 alt="{{ post.title }}" />
-        </figure>
-    {% endif %}
-    <div class="card-body">
-        <h2 class="card-title">
-            {% if post.title %}
-                {{ post.title }}
-            {% endif %}
-        </h2>
-        <p>{{post.content}}</p>
-        <div class="card-actions justify-end">
-            {% for tag in post.tags.all %}
-                <div class="badge badge-outline">{{ tag }}</div>
-            {% endfor %}
+        {% endif %}
+        <div class="card-body">
+            <h2 class="card-title">
+                {% if post.title %}
+                    {{ post.title }}
+                {% endif %}
+            </h2>
         </div>
     </div>
-</div>
+</a>
+
+<dialog id="my_post_content" class="modal" style="display: none;">
+    <div class="modal-box w-11/12 max-w-4xl">
+      <h3 class="text-lg font-bold">Hello!</h3>
+      <p class="py-4">Click the button below to close</p>
+      <div class="modal-action">
+        <form method="dialog">
+          <!-- if there is a button, it will close the modal -->
+          <button class="btn">Close</button>
+        </form>
+      </div>
+    </div>
+  </dialog>
+
+  <script>
+    document.addEventListener('htmx:afterSwap', (event) => {
+      if (event.detail.target.id === 'my_post_content') {
+        document.getElementById('my_post_content').showModal();
+      }
+    });
+  </script>
