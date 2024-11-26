@@ -1,17 +1,22 @@
 {% load static %}
 {% load _extras %}
 
+<div class="card card-compact bg-base-100 w-80 h-80 image-full shadow-xl mx-6">
 {% if 'Meditation'|check_tag:quote %}
-    <div class="card bg-base-100 w-96 image-full shadow-xl mx-6">
         <figure>
             <img
                 src="{% static '/img/meditation_img.jpg' %}"
                 alt="meditation" />
         </figure>
 {% else %}
-    <div class="card bg-base-100 w-96 shadow-xl mx-6">
+    <figure>
+        <img
+            src="{% static '/img/quote_img.jpg' %}"
+            alt="meditation" />
+    </figure>
 {% endif %}
     <div class="card-body">
-        <p class="font-sans font-semibold">{{quote.content}}</p>
+        <span class="font-sans font-semibold">"{{quote.content}}" </span>
+        <span class="font-sans font-bold text-yellow-500">- {{quote.author}}</span>
     </div>
 </div>

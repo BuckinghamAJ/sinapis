@@ -1,6 +1,7 @@
 {% load _extras %}
 
-<div class="m-2 flex flex-wrap">
+<!-- Main Section -->
+<div class="m-2 flex flex-wrap gap-6 column-4">
     {% for c in content %}
         {% with obj_name=c|class_name %}
             {% if obj_name == 'Post' %}
