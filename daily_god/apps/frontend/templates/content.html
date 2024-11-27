@@ -1,7 +1,15 @@
 {% load _extras %}
 
 <!-- Main Section -->
-<div class="m-2 flex flex-wrap gap-6 column-4">
+<div class="m-2 flex flex-wrap gap-6 column-4"
+    x-data="{   close_post_content() {$refs.post_content_dialog.close()},
+                close_post_content_from_event(event) {
+                    if (event.currentTarget === event.target) {
+                        this.close_post_content();
+                    }
+                },  
+    }"
+>
     {% for c in content %}
         {% with obj_name=c|class_name %}
             {% if obj_name == 'Post' %}

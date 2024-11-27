@@ -1,12 +1,55 @@
-{% load tailwind_filters %}
+{% load partials %}
 
-<dialog id="new_post_model" class="modal">
+{% partialdef post-form %}
+    <div class="pt-7 pb-3">
+        <div>
+            <label class="input input-bordered flex items-center gap-2">
+                <input type="text" name="title" class="grow border-0" placeholder="Title*" required/>
+            </label>
+        </div>
+
+        <div class ="py-4">
+            <label class="input input-bordered flex items-center gap-2">
+                <input type="url" name="url" class="border-0 grow" placeholder="URL: https://example.com"
+                    pattern="https://.*" size="30"/>
+            </label>
+        </div>
+
+        <div class="pb-2">
+            <textarea name="summary" class="textarea textarea-bordered h-44 w-full" placeholder="Summary*" required></textarea>
+        </div>
+
+        <div class="text-end">
+            <button class="btn btn-outline" 
+                    hx-post="post/new/"
+                    hx-push-url="false"
+                    hx-target="#post_form"
+                    hx-swap="outerHTML"
+                    @click="close_new_post_modal()">           
+                Submit
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 7.5h-.75A2.25 2.25 0 0 0 4.5 9.75v7.5a2.25 2.25 0 0 0 2.25 2.25h7.5a2.25 2.25 0 0 0 2.25-2.25v-7.5a2.25 2.25 0 0 0-2.25-2.25h-.75m0-3-3-3m0 0-3 3m3-3v11.25m6-2.25h.75a2.25 2.25 0 0 1 2.25 2.25v7.5a2.25 2.25 0 0 1-2.25 2.25h-7.5a2.25 2.25 0 0 1-2.25-2.25v-.75" />
+                    </svg>     
+            </button>
+        </div>
+    </div>
+{% endpartialdef post-form %}
+
+<dialog id="new_post_model" class="modal" x-ref="new_post_dialog" @click="close_npm_from_event(event)">
     <div class="modal-box">
-        <form method="post">
-            <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+
+        <h3 class="text-lg font-bold">Submit a New Seedling</h3>
+        <button type="button" 
+            class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
+            @click="close_new_post_modal()"
+            >✕</button>
+
+        <form method="dialog" id="post_form">
             {% csrf_token %}
-            {{ post_form|crispy }}
-          <!-- if there is a button in form, it will close the modal -->
+            
+            {% partial post-form %}
+
+        <!-- if there is a button in form, it will close the modal -->
         </form>
     </div>
 </dialog>

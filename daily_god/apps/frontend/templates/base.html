@@ -6,13 +6,23 @@
         <title>Mustard Seed</title>
         <link rel="stylesheet" type="text/css" href="{% static 'css/general.css' %}">
         <link rel="stylesheet" type="text/css" href="{% static 'css/sidebar.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/new_post.css' %}">
 
         <script src="{% static 'js/htmx.min.js' %}"></script>
+        <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
         {% tailwind_css %}
     </head>
     <body>
+        <div x-data="{ close_new_post_modal() { $refs.new_post_dialog.close() },
+                       close_npm_from_event(event) {
+                            if (event.currentTarget === event.target) {
+                                this.close_new_post_modal();
+                            }
+                        },  
+                    }">
             {% block content %}
             {% endblock %}
+        </div>
     </body>
 </html>

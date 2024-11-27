@@ -1,4 +1,4 @@
-<dialog id="my_post_content" class="modal">
+<dialog x-ref="post_content_dialog" id="my_post_content" class="modal" @click="close_post_content_from_event(event)">
   <div class="modal-box w-11/12 max-w-4xl">
     <form method="dialog">
         <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>

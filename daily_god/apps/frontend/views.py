@@ -4,13 +4,10 @@ from posts.forms import PostForm
 from quotes.models import Quote
 from prayers.models import Prayer
 
-
 from itertools import chain
 # Create your views here.
 
 def home(request):
-
-    post_form = PostForm()
 
     try:
         latest_posts = Post.objects.filter(is_approved=True).order_by('-created_at')[:50]
@@ -31,7 +28,6 @@ def home(request):
 
     context = {
         'content': content,
-        'post_form': post_form,
     }
 
     return render(request, 'index.html', context=context)
@@ -53,3 +49,15 @@ def get_post(request, id):
 
 
     return 
+
+
+def submit_new_post(request):
+    
+    if request.method == 'POST':
+        form = PostForm(request.POST)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.posted_by = request.user
+            post.save()
+
+    return render(request, 'components/new_post.html#post-form')
