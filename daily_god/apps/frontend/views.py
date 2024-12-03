@@ -3,8 +3,9 @@ from posts.models import Post
 from posts.forms import PostForm
 from quotes.models import Quote
 from prayers.models import Prayer
-
 from itertools import chain
+
+from django.contrib.auth import logout
 # Create your views here.
 
 def home(request):
@@ -61,3 +62,9 @@ def submit_new_post(request):
             post.save()
 
     return render(request, 'components/new_post.html#post-form')
+
+
+def profile_logout(request):
+    logout(request)
+
+    return render(request, 'components/topbar.html')
