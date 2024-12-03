@@ -242,6 +242,13 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = Path(BASE_DIR, 'media')
 
 
+# All Auth Settings
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_AUTHENTICATION_METHOD = "username_email"
+ACCOUNT_PRESERVE_USERNAME_CASING = False
+ACCOUNT_SIGNUP_FORM_HONEYPOT_FIELD = "phone_number"
+ACCOUNT_USERNAME_MIN_LENGTH = 3
+
 # TODO: Add Following Packages for Prod:
 # django-defender
 # django-filter
