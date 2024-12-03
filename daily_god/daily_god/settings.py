@@ -43,6 +43,7 @@ DEBUG = env('DEBUG')
 ALLOWED_HOSTS = []
 
 
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -52,6 +53,7 @@ INSTALLED_APPS = [
     'api',
     'prayers',
     'comments',
+    'profiles',
     'template_partials',
     'taggit',
     'tailwind',
@@ -85,6 +87,9 @@ MIDDLEWARE = [
     # Add the account middleware:
     "allauth.account.middleware.AccountMiddleware",
 ]
+
+SITE_ID = 1
+LOGIN_REDIRECT_URL = "/"  # new
 
 ROOT_URLCONF = 'daily_god.urls'
 
@@ -232,6 +237,9 @@ INTERNAL_IPS = [
     "127.0.0.1",
 ]
 
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = Path(BASE_DIR, 'media')
 
 
 # TODO: Add Following Packages for Prod:
