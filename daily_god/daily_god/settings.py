@@ -69,9 +69,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    "allauth_ui",
     'allauth',
     'allauth.account',
     'allauth.socialaccount.providers.google',
+    "widget_tweaks",
+    "slippers",
 ]
 
 MIDDLEWARE = [
@@ -253,6 +256,10 @@ ACCOUNT_AUTHENTICATION_METHOD = "username_email"
 ACCOUNT_PRESERVE_USERNAME_CASING = False
 ACCOUNT_SIGNUP_FORM_HONEYPOT_FIELD = "phone_number"
 ACCOUNT_USERNAME_MIN_LENGTH = 3
+
+# ALLAUTH UI Settings
+ALLAUTH_UI_THEME = "dark"
+
 
 # TODO: Add Following Packages for Prod:
 # django-defender
