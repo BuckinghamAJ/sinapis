@@ -31,37 +31,10 @@ def home(request):
         'content': content,
     }
 
-    return render(request, 'index.html', context=context)
+    return render(request, 'index.html', context=context) 
 
 
 
-
-def get_post(request, id):
-    try:
-        post = Post.objects.get(id=id)
-    except Post.DoesNotExist:
-        post = None
-    
-    if post:
-        context = {
-            'post': post,
-        }
-        return render(request, 'components/post_modal.html', context=context)
-
-
-    return 
-
-
-def submit_new_post(request):
-    
-    if request.method == 'POST':
-        form = PostForm(request.POST)
-        if form.is_valid():
-            post = form.save(commit=False)
-            post.posted_by = request.user
-            post.save()
-
-    return render(request, 'components/new_post.html#post-form')
 
 
 def profile_logout(request):
