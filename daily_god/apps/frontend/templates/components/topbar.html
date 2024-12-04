@@ -41,7 +41,39 @@
           </ul>
         </div>
       {% else %}
-        <a class="btn" href="{% url 'account_login' %}">Login</a>
+        <a class="btn" 
+            hx-get="{% url 'account_login' %}"
+            hx-push-url="false"
+            hx-target="#login_modal"
+            hx-trigger="click"
+            hx-swap="innerHTML"
+            >Login</a>
       {% endif %}
     </div>
+</div>
+
+<dialog class="modal" id="login_modal_dialog">
+  <div  class="modal-box max-w-3xl" >
+    <form method="dialog">
+      <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+    </form>
+    <div id="login_modal" class="max-h-fit">
+      <h3 class="text-lg font-bold">Hello!</h3>
+      <p class="py-4">Click the button below to close</p>
+      <div class="modal-action">
+        <form method="dialog">
+          <!-- if there is a button, it will close the modal -->
+          <button class="btn">Close</button>
+        </form>
+      </div>
+    </div>
   </div>
+</dialog>
+
+<script>
+  document.addEventListener('htmx:afterSwap', (event) => {
+    if (event.detail.target.id === 'login_modal') {
+      document.getElementById('login_modal_dialog').showModal();
+    }
+  });
+</script>
