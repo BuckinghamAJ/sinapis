@@ -16,7 +16,7 @@ from django.db import connections
 import environ
 import sys
 import os 
-PROJECT_ROOT = Path(__file__).resolve().parent
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
 APP_DIR = Path(PROJECT_ROOT, 'apps')
 
 env = environ.Env(
@@ -99,6 +99,11 @@ TEMPLATES = [
         'DIRS': [
             Path(APP_DIR, 'frontend', 'templates'),
             Path(APP_DIR, 'frontend', 'templates', 'components'),
+            Path(APP_DIR, 'templates'),
+            Path(APP_DIR, 'templates', 'posts'),
+            Path(APP_DIR, 'templates', 'quotes'),
+            Path(APP_DIR, 'templates', 'prayers'),
+            Path(APP_DIR, 'templates', 'profiles'),
         ],
         'APP_DIRS': True,
         'OPTIONS': {
