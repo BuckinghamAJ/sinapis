@@ -1,0 +1,44 @@
+<div id="login" class="w-11/12 mx-auto mt-5 rounded-lg shadow-md bg-base-100">
+    <h1 class="mb-3 text-2xl">Sign In</h1>
+    
+    <div class="py-3">
+        If you have not created an account yet, then please
+        <a class="link" 
+            hx-get="{% url 'request_signup' %}"
+            hx-push-url="false"
+            hx-target="#login"
+            hx-swap="outerHTML"
+                >sign up</a> first.
+    </div>
+
+    <form class="py-3" method="post" action="{% url 'account_login' %}">
+        {% csrf_token %}
+        
+        <label class="label" for="id_login">
+            <span class="label-text">Login</span>
+        </label>
+        <input type="text" name="login" placeholder="" autocomplete="email" class="w-full input input-bordered text-primary" required="" id="id_login">
+        
+        <label class="label" for="id_password">
+            <span class="label-text">Password</span>
+        </label>
+        <input type="password" name="password" placeholder="" autocomplete="current-password" class="w-full input input-bordered text-primary" required="" aria-describedby="id_password_helptext" id="id_password">
+
+        <div class="items-start my-2 form-control">
+            <label class="cursor-pointer label">
+                <input type="checkbox" name="remember" class="checkbox checkbox-accent" id="id_remember">
+                <span class="ml-2 label-text">Remember me</span>
+            </label>
+        </div>
+        
+        <div class="flex flex-col">
+            <a class="link self-end text-sm" 
+               hx-get="{% url 'request_account_reset' %}"
+               hx-push-url="false"
+               hx-target="#login"
+               hx-swap="outerHTML">Forgot password?</a>
+        </div>
+        
+        <button type="submit" class="my-3 btn btn-primary">Sign In</button>
+    </form>
+</div>

@@ -32,7 +32,7 @@
             </li>
             <li><a>Settings</a></li>
             <li><a 
-              hx-get="profile/logout"
+              hx-get="{% url 'profile_logout' %}"
               hx-push-url="false"
               hx-target="#topbar"
               hx-trigger="click"
@@ -42,7 +42,7 @@
         </div>
       {% else %}
         <a class="btn" 
-            hx-get="{% url 'account_login' %}"
+            hx-get="{% url 'request_login' %}"
             hx-push-url="false"
             hx-target="#login_modal"
             hx-trigger="click"
@@ -53,7 +53,7 @@
 </div>
 
 <dialog class="modal" id="login_modal_dialog">
-  <div  class="modal-box max-w-3xl" >
+  <div  class="modal-box max-w-3xl overflow-x-hidden" >
     <form method="dialog">
       <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
     </form>

@@ -1,0 +1,34 @@
+<div id="reset" class="w-11/12 p-10 mx-auto mt-5 rounded-lg shadow-md md:mt-15 lg:mt-32 sm:p-5 md:w-6/12 lg:w-5/12 xl:w-4/12 md:p-10 xl:p-13 bg-base-100">
+    <h1 class="mb-3 text-2xl">Password Reset</h1>
+    
+    <div>
+        Forgotten your password? Enter your email address below, and we'll send you an email allowing you to reset it.
+    </div>
+
+    <form class="py-3" method="post" action="{% url 'account_reset_password' %}">
+        {% csrf_token %}
+        
+        <label class="label" for="id_email">
+            <span class="label-text">Email</span>
+        </label>
+        <input type="email" name="email" placeholder="" autocomplete="email" maxlength="320" class="w-full input input-bordered text-primary" required="" id="id_email">
+        
+        <button type="submit" class="my-3 btn btn-primary">Reset My Password</button>
+    </form>
+
+    <div>
+        Please contact us if you have any trouble resetting your password.
+    </div>
+    <div class="mx-auto [&_a]:link text-sm flex flex-col md:flex-row items-center justify-center gap-3 mt-3">
+        <a 
+           hx-get="{% url 'request_login' %}"
+           hx-push-url="false"
+           hx-target="#reset"
+           hx-swap="outerHTML">Sign In</a>
+        <a 
+           hx-get="{% url 'request_signup' %}"
+           hx-push-url="false"
+           hx-target="#reset"
+           hx-swap="outerHTML">Sign Up</a>
+    </div>
+</div>

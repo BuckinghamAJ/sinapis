@@ -1,0 +1,39 @@
+<div id='signup' class="w-11/12 mx-auto mt-5 rounded-lg shadow-md bg-base-100">
+    <h1 class="mb-3 text-2xl">Sign Up</h1>
+    <div>Already have an account? Then please <a hx-get="{% url 'request_login' %}"
+                                                 hx-push-url="false" 
+                                                 hx-target="#signup" 
+                                                 hx-swap="outerHTML"
+        class="link">sign in</a>.</div>
+
+    <form class="py-3" method="post" action="{% url 'account_signup' %}">
+        {% csrf_token %}
+        
+        <label class="label" for="id_email">
+            <span class="label-text">Email</span>
+        </label>
+        <input type="email" name="email" placeholder="" autocomplete="email" maxlength="320" class="w-full input input-bordered text-primary" required="" id="id_email">
+        
+        <label class="label" for="id_username">
+            <span class="label-text">Username</span>
+        </label>
+        <input type="text" name="username" placeholder="" autocomplete="username" minlength="3" maxlength="150" class="w-full input input-bordered text-primary" required="" id="id_username">
+        
+        <label class="label" for="id_password1">
+            <span class="label-text">Password</span>
+        </label>
+        <input type="password" name="password1" placeholder="" autocomplete="new-password" class="w-full input input-bordered text-primary" required="" aria-describedby="id_password1_helptext" id="id_password1">
+        
+        <label class="label" for="id_password2">
+            <span class="label-text">Password (again)</span>
+        </label>
+        <input type="password" name="password2" placeholder="" autocomplete="new-password" class="w-full input input-bordered text-primary" required="" id="id_password2">
+        
+        <label class="label" for="id_phone_number">
+            <span class="label-text"></span>
+        </label>
+        <input type="text" name="phone_number" style="position: absolute; right: -99999px;" tabindex="-1" autocomplete="nope" class="w-full input input-bordered text-primary" placeholder="" id="id_phone_number">
+        
+        <button type="submit" class="my-3 btn btn-primary">Sign Up</button>
+    </form>
+</div>
