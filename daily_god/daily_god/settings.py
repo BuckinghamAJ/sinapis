@@ -262,6 +262,9 @@ ACCOUNT_USERNAME_MIN_LENGTH = 3
 ALLAUTH_UI_THEME = "dark"
 
 
+# Seedling App Settings
+TRUST_LEVEL_THRESHOLD = 10
+
 # TODO: Add Following Packages for Prod:
 # django-defender
 # django-filter
