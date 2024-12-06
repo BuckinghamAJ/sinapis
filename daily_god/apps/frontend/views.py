@@ -29,6 +29,7 @@ def home(request):
 
     context = {
         'content': content,
+        'user': request.user,
     }
 
     return render(request, 'index.html', context=context) 
