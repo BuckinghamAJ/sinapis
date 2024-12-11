@@ -11,8 +11,8 @@ urlpatterns = [
 
     ### Profiles ###
     path('profile/logout', profiles_views.profile_logout, name='profile_logout'),
-    path('profile/signup/', profiles_views.request_signup, name='request_signup'),
-    path('profile/login/', profiles_views.request_login, name='request_login'),
+    path('profile/signup/', profiles_views.request_signup, name='profile_signup'),
+    path('profile/login/', profiles_views.request_login, name='profile_login'),
     path('profile/account_reset/', profiles_views.request_account_reset, name='request_account_reset'),
 
     ### Posts ###

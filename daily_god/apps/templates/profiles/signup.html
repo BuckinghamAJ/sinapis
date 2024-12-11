@@ -1,39 +1,72 @@
 <div id='signup' class="w-11/12 mx-auto mt-5 rounded-lg shadow-md bg-base-100">
     <h1 class="mb-3 text-2xl">Sign Up</h1>
-    <div>Already have an account? Then please <a hx-get="{% url 'request_login' %}"
+    <div>Already have an account? Then please <a hx-get="{% url 'profile_login' %}"
                                                  hx-push-url="false" 
                                                  hx-target="#signup" 
                                                  hx-swap="outerHTML"
         class="link">sign in</a>.</div>
 
-    <form class="py-3" method="post" action="{% url 'account_signup' %}">
+    <form class="py-3">
         {% csrf_token %}
         
         <label class="label" for="id_email">
             <span class="label-text">Email</span>
         </label>
-        <input type="email" name="email" placeholder="" autocomplete="email" maxlength="320" class="w-full input input-bordered text-primary" required="" id="id_email">
+        <input type="email" name="email" placeholder="" autocomplete="email" maxlength="320" class="w-full input input-bordered text-primary {% if errors.email %}input-error{% endif %}" id="id_email" required />
+        {% if errors.email %}
+            <div class="flex items-center max-w-xs mt-1 ml-1 text-xs font-medium tracking-wide text-error">
+                {% for error in errors.email %}
+                    <p>{{ error }}</p>
+                {% endfor %}
+            </div>
+        
+        {% endif %}
         
         <label class="label" for="id_username">
             <span class="label-text">Username</span>
         </label>
-        <input type="text" name="username" placeholder="" autocomplete="username" minlength="3" maxlength="150" class="w-full input input-bordered text-primary" required="" id="id_username">
+        <input type="text" name="username" placeholder="" autocomplete="username" minlength="3" maxlength="150" class="w-full input input-bordered text-primary {% if errors.username %}input-error{% endif %}" id="id_username" required />
+        {% if errors.username %}
+            <div class="flex items-center max-w-xs mt-1 ml-1 text-xs font-medium tracking-wide text-error">
+                {% for error in errors.username %}
+                    <p>{{ error }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
         
         <label class="label" for="id_password1">
             <span class="label-text">Password</span>
         </label>
-        <input type="password" name="password1" placeholder="" autocomplete="new-password" class="w-full input input-bordered text-primary" required="" aria-describedby="id_password1_helptext" id="id_password1">
+        <input type="password" name="password1" placeholder="" autocomplete="new-password" 
+                class="w-full input input-bordered text-primary {% if errors.password1 %}input-error{% endif %}" 
+                aria-describedby="id_password1_helptext" id="id_password1" pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\W).{8,}" title="8 or more characters, at least one uppercase letter, one lowercase letter, and one special character"
+                required />
+        {% if errors.password1 %}
+            <div class="flex items-center max-w-xs mt-1 ml-1 text-xs font-medium tracking-wide text-error">
+                {% for error in errors.password1 %}
+                    <p>{{ error }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
         
         <label class="label" for="id_password2">
             <span class="label-text">Password (again)</span>
         </label>
-        <input type="password" name="password2" placeholder="" autocomplete="new-password" class="w-full input input-bordered text-primary" required="" id="id_password2">
+        <input type="password" name="password2" placeholder="" autocomplete="new-password" class="w-full input input-bordered text-primary {% if errors.password2 %}input-error{% endif %}" id="id_password2" required />
+        {% if errors.password2 %}
+            <div class="flex items-center max-w-xs mt-1 ml-1 text-xs font-medium tracking-wide text-error">
+                {% for error in errors.password2 %}
+                    <p>{{ error }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
         
         <label class="label" for="id_phone_number">
             <span class="label-text"></span>
         </label>
-        <input type="text" name="phone_number" style="position: absolute; right: -99999px;" tabindex="-1" autocomplete="nope" class="w-full input input-bordered text-primary" placeholder="" id="id_phone_number">
         
-        <button type="submit" class="my-3 btn btn-primary">Sign Up</button>
+        <input type="hidden" name="phone_number" style="position: absolute; right: -99999px;" tabindex="-1" autocomplete="nope" class="w-full input input-bordered text-primary" placeholder="" id="id_phone_number">
+        
+        <button class="my-3 btn btn-primary" hx-post="{% url 'profile_signup' %}" hx-target="#signup" hx-swap="outerHTML">Sign Up</button>
     </form>
 </div>

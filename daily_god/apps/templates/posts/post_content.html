@@ -1,36 +1,33 @@
 <!-- TODO: Utilize htmx to make a modal for click on a post -->
 
-<a hx-get="post/{{post.id}}"
-    hx-target="#my_post_content"
-    hx-trigger="click"
-    hx-swap="outerHTML"
-    hx-push-url="false"
-    >
-    <div class="card card-compact bg-base-100 w-80 h-80 shadow-xl mx-6 hover:shadow-gold-glow">
-        {% if post.image_url %}
-            <img class="object-cover h-60 rounded-[inherit]"
-                src="{{ post.image_url }}"
-                alt="{{ post.title }}" />
-        {% endif %}
-        <div class="card-body text-white">
-            <h2 class="card-title">
-                {% if post.title %}
-                    {{ post.title }}
-                {% endif %}
-            </h2>
-        </div>
+<div class="card card-compact bg-base-100 w-80 h-80 shadow-xl mx-6 transition-all duration-300 hover:shadow-gold-glow">
+  <a hx-get="post/{{post.id}}"
+     hx-target="#my_post_content"
+     hx-trigger="click"
+     hx-swap="outerHTML"
+     hx-push-url="false">
+    {% if post.image_url %}
+    <img class="object-cover w-full h-48 rounded-t-lg"
+         src="{{ post.image_url }}"
+         alt="{{ post.title }}" />
+    {% endif %}
+    <div class="card-body text-white h-24 overflow-hidden text-clip">
+        <h2 class="card-title text-base md:text-lg">
+            {% if post.title %}
+                {{ post.title }}
+            {% endif %}
+        </h2>
     </div>
-</a>
+  </a>
+  {% include 'components/interactable.html' %}
+</div>
 
-<dialog x-ref="new_post_dialog" id="my_post_content" class="modal" style="display: none;" >
+<dialog x-ref="new_post_dialog" id="my_post_content" class="modal" style="display: none;">
     <div class="modal-box w-11/12 max-w-4xl">
       <h3 class="text-lg font-bold">Hello!</h3>
       <p class="py-4">Click the button below to close</p>
       <div class="modal-action">
-        <form method="dialog">
-          <!-- if there is a button, it will close the modal -->
-          <button class="btn">Close</button>
-        </form>
+        <button class="btn">Close</button>
       </div>
     </div>
 </dialog>

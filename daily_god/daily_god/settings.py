@@ -87,6 +87,10 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     "django_browser_reload.middleware.BrowserReloadMiddleware",
 
+    # HTMX
+    'django_htmx.middleware.HtmxMiddleware',
+
+
     # Add the account middleware:
     "allauth.account.middleware.AccountMiddleware",
 ]
@@ -172,6 +176,11 @@ CACHES = {
         'LOCATION': '127.0.0.1:11211',
     }
 }
+
+# cache settings
+CACHE_MIDDLEWARE_ALIAS = 'default'
+CACHE_MIDDLEWARE_SECONDS = 6000
+CACHE_MIDDLEWARE_KEY_PREFIX = ''
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators

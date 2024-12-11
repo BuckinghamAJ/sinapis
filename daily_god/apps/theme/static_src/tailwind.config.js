@@ -56,6 +56,18 @@ module.exports = {
         require('daisyui'),
     ],
     daisyui: {
-        themes: ["light", "dark", "cupcake"], // Add your desired themes here
+        themes: ["light", "dark", "cupcake",{
+            'seedling' : {
+                "primary": "#eab308",  
+                "secondary": "#c084fc",    
+                "accent": "#14b8a6",  
+                "neutral": "#374151",
+                "base-100": "#1f2937",
+                "info": "#007ab6",
+                "success": "#16a34a",
+                "warning": "#fd7f22",
+                "error": "#f43f5e",
+            }
+        }], // Add your desired themes here
     },
 }

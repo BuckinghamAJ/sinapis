@@ -1,22 +1,27 @@
 {% load static %}
 {% load _extras %}
 
-<div class="card card-compact bg-base-100 w-80 h-80 image-full shadow-xl mx-6">
-{% if 'Meditation'|check_tag:quote %}
+<div class="card card-compact bg-base-100 w-80 h-80 image-full shadow-xl mx-6 transition-all duration-300" onmouseover="expandCard(this);" onmouseout="shrinkCard(this);">
+    {% if 'Meditation'|check_tag:quote %}
         <figure>
             <img
                 src="{% static '/img/meditation_img.jpg' %}"
                 alt="meditation" />
         </figure>
-{% else %}
-    <figure>
-        <img
-            src="{% static '/img/quote_img.jpg' %}"
-            alt="meditation" />
-    </figure>
-{% endif %}
-    <div class="card-body">
-        <span class="font-sans font-semibold text-white">"{{quote.content}}" </span>
-        <span class="font-sans font-bold text-yellow-500">- {{quote.author}}</span>
+    {% else %}
+        <figure>
+            <img
+                src="{% static '/img/quote_img.jpg' %}"
+                alt="meditation" />
+        </figure>
+    {% endif %}
+    <div class="card-body flex flex-col h-80 overflow-hidden">
+        <div class="flex-grow">
+            <p class="font-sans font-semibold text-white text-ellipsis overflow-hidden truncated-content" id="">"{{quote.content | truncatewords:100 }}" </p>
+            <p class="font-sans font-semibold text-white hidden full-content">"{{quote.content}}" </p>
+        </div>
+        <div class="flex-none mt-2">
+            <span class="font-sans font-bold text-yellow-500">- {{quote.author}}</span>
+        </div>
     </div>
 </div>
