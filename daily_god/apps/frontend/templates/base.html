@@ -1,7 +1,7 @@
 {% load static %}
 {% load static tailwind_tags %}
 <!DOCTYPE html>
-<html data-theme="dark">
+<html data-theme="dark" style="overflow: hidden;">
     <head>
         <title>Mustard Seed</title>
         <link rel="stylesheet" type="text/css" href="{% static 'css/general.css' %}">
@@ -26,5 +26,13 @@
             {% block content %}
             {% endblock %}
         </div>
+
+        <script>
+            document.addEventListener('htmx:afterSwap', (event) => {
+                if (event.detail.target.id === 'my_post_content') {
+                document.getElementById('my_post_content').showModal();
+                }
+            });
+        </script>
     </body>
 </html>

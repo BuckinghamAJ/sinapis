@@ -1,6 +1,6 @@
 <!-- TODO: Utilize htmx to make a modal for click on a post -->
 
-<div class="card card-compact bg-base-100 w-80 h-80 shadow-xl mx-6 transition-all duration-300 hover:shadow-gold-glow">
+<div class="card card-compact bg-base-100 w-80 h-80 shadow-xl mx-6 hover:shadow-gold-glow">
   <a hx-get="post/{{post.id}}"
      hx-target="#my_post_content"
      hx-trigger="click"
@@ -32,10 +32,3 @@
     </div>
 </dialog>
 
-  <script>
-    document.addEventListener('htmx:afterSwap', (event) => {
-      if (event.detail.target.id === 'my_post_content') {
-        document.getElementById('my_post_content').showModal();
-      }
-    });
-  </script>
