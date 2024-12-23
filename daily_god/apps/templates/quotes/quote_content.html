@@ -1,7 +1,7 @@
 {% load static %}
 {% load _extras %}
 
-<div class="card card-compact bg-base-100 w-80 h-80 image-full shadow-xl mx-6" onmouseover="expandCard(this);" onmouseout="shrinkCard(this);">
+<div id="quote_card_{{quote.id}}" class="card card-compact bg-base-100 w-80 h-80 image-full shadow-xl mx-6" onmouseover="expandCard(this);" onmouseout="shrinkCard(this);">
     <figure class="h-80 bckGround-image">
     {% if 'Meditation'|check_tag:quote %}
         <img
@@ -21,7 +21,8 @@
         <div class="flex-none mt-2">
             <span class="font-sans font-bold text-yellow-500">- {{quote.author}}</span>
         </div>
-        {% include 'components/interactable.html' %}
-
+        {% if user.is_authenticated %}
+            {% include 'components/interactable.html' with content=quote type='quote' id=quote.id %}
+        {% endif %}
     </div>
 </div>

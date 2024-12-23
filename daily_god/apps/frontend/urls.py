@@ -8,6 +8,12 @@ urlpatterns = [
     ## Frontend  Templates ##
 
     path('', views.home, name='home'),
+    path('bookmarked/', views.bookmarked, name='bookmarked'),
+    path('comment/', views.post_comment, name='comment'),
+
+    # Interactables
+    path('love/<str:type>/<int:id>/', views.love_content, name='love_content'),
+    path('bookmark/<str:type>/<int:id>/', views.bookmark_content, name='bookmark_content'),
 
     ### Profiles ###
     path('profile/logout', profiles_views.profile_logout, name='profile_logout'),

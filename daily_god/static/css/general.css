@@ -1,4 +1,4 @@
 .hover\:shadow-gold-glow:hover {
-    box-shadow: 0 0 10px 5px gold;
+    box-shadow: 0 0 10px 5px #ffd700;
     cursor: pointer;
 }

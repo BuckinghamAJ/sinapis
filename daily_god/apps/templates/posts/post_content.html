@@ -1,6 +1,6 @@
 <!-- TODO: Utilize htmx to make a modal for click on a post -->
 
-<div class="card card-compact bg-base-100 w-80 h-80 shadow-xl mx-6 hover:shadow-gold-glow">
+<div id='post_card_{{post.id}}' class="card card-compact bg-base-100 w-80 h-80 shadow-xl mx-6 hover:shadow-gold-glow">
   <a hx-get="post/{{post.id}}"
      hx-target="#my_post_content"
      hx-trigger="click"
@@ -19,8 +19,13 @@
         </h2>
     </div>
   </a>
-  {% include 'components/interactable.html' %}
+  <!-- TODO: Make a modal pop up instead for login.-->
+  {% if user.is_authenticated %}
+    {% include 'components/interactable.html' with content=post type='post' id=post.id %}
+  {% endif %}
 </div>
+
+<!-- TODO: Need to do this for all prayers & quotes-->
 
 <dialog x-ref="new_post_dialog" id="my_post_content" class="modal" style="display: none;">
     <div class="modal-box w-11/12 max-w-4xl">

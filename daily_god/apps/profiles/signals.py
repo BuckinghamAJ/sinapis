@@ -3,7 +3,7 @@ from django.dispatch import receiver
 from django.contrib.auth.models import User
 from .models import Profile
 from posts.models import Post
-from comments.models import Comment
+from comments.models import SeedComment
 
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
@@ -21,7 +21,7 @@ def update_trust_level_on_post(sender, instance, created, **kwargs):
         profile.trust_level += 1  # Increase trust level for creating a post
         profile.save()
 
-@receiver(post_save, sender=Comment)
+@receiver(post_save, sender=SeedComment)
 def update_trust_level_on_comment(sender, instance, created, **kwargs):
     if created:
         profile = instance.author.profile

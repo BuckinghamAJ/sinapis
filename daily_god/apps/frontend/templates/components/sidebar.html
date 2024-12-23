@@ -5,8 +5,8 @@
       <!-- TODO: Implement Feed curration
       <li><a class="hover:bg-gray-700">My Feed</a></li> 
       -->
-    <li><a class="hover:bg-gray-700">Explore</a></li>
-    <li><a class="hover:bg-gray-700">Bookmarks</a></li>
+    <li><a class="hover:bg-gray-700" hx-get="{% url 'home' %}" hx-push-url="false" hx-target="#main_content" hx-trigger="click" hx-swap="outerHTML">Explore</a></li>
+    <li><a class="hover:bg-gray-700" hx-get="{% url 'bookmarked' %}" hx-push-url="false" hx-target="#main_content" hx-trigger="click" hx-swap="outerHTML">Bookmarks</a></li>
 
   </ul>
 </div>

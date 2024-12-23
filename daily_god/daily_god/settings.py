@@ -24,6 +24,8 @@ env = environ.Env(
     DEBUG=(bool, False)
 )
 
+SITE_ID = 1
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 sys.path.insert(0, os.path.join(BASE_DIR, 'apps'))
@@ -66,6 +68,7 @@ INSTALLED_APPS = [
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
+    'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
@@ -73,9 +76,14 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount.providers.google',
+    'django_comments',
     "widget_tweaks",
     "slippers",
 ]
+
+# Django comments Settings
+COMMENTS_APP='comments'
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -275,6 +283,7 @@ ALLAUTH_UI_THEME = "dark"
 TRUST_LEVEL_THRESHOLD = 10
 
 # TODO: Add Following Packages for Prod:
+# django-comments-xtd
 # django-defender
 # django-filter
 # django-ninja

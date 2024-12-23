@@ -1,19 +1,41 @@
+
+
 <dialog x-ref="post_content_dialog" id="my_post_content" class="modal" @click="close_post_content_from_event(event)">
   <div class="modal-box w-11/12 max-w-4xl text-white">
     <form method="dialog">
         <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
       </form>
-    <h3 class="text-lg font-bold">{{post.title}}</h3>
+    <h2 class="text-2xl font-bold">{{post.title}}</h2>
     
-    <a class="btn" href="{{post.url}}" target="_blank">
+    <div class="border border-yellow-200 rounded-lg p-2">
+      <div class="flex justify-end">
+        <a class="btn btn-primary" href="{{post.url}}" target="_blank">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
             <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
           </svg>          
         Read Post
-    </a>
-    <p class="py-4">{{post.summary}}</p>
-    <div class="card-actions justify-end">
-        <div class="badge">{{post.posted_by.username}}</div>
+        </a>
+      </div>
+      
+      <p class="py-4">{{post.summary}}</p>
     </div>
+    <div class="card-actions justify-end">
+        <div class="badge self-center">{{post.posted_by.username}}</div>
+        <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
+          <div class="w-10 rounded-full">
+            <img
+              alt="Posted By Image"
+              src="{{ post.posted_by.profile.profile_pic.url }}" />
+          </div>
+        </div>
+    </div>
+
+    <div class="font-thin underline ">
+        <p>{{post.loves}} Hearts</p>
+    </div>
+
+    {% include 'components/comments.html' with content=post type='post' %}
+
+
   </div>
 </dialog>

@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.templatetags.static import static
 from pathlib import Path
+from posts.models import Post
 
 profile_pic_default = static('img/default_pfp.jpg')
 
@@ -16,8 +17,6 @@ class Profile(models.Model):
     trust_level = models.PositiveIntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-
-    
 
     def __str__(self):
         return f'{self.user.username}'
