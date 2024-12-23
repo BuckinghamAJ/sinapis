@@ -34,7 +34,7 @@
         <p>{{post.loves}} Hearts</p>
     </div>
 
-    {% include 'components/comments.html' with content=post type='post' %}
+    {% include 'comments/comments.html' with content=post type='post' model='posts.Post' form=comment_form %}
 
 
   </div>

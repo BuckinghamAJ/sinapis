@@ -119,6 +119,7 @@ TEMPLATES = [
             Path(APP_DIR, 'templates', 'quotes'),
             Path(APP_DIR, 'templates', 'prayers'),
             Path(APP_DIR, 'templates', 'profiles'),
+            Path(APP_DIR, 'templates', 'comments'),
         ],
         'APP_DIRS': True,
         'OPTIONS': {

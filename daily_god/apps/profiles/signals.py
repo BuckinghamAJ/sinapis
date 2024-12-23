@@ -24,7 +24,7 @@ def update_trust_level_on_post(sender, instance, created, **kwargs):
 @receiver(post_save, sender=SeedComment)
 def update_trust_level_on_comment(sender, instance, created, **kwargs):
     if created:
-        profile = instance.author.profile
+        profile = instance.user.profile
         profile.trust_level += 1  # Increase trust level for creating a comment
         profile.save()
 

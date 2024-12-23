@@ -2,14 +2,16 @@ from django.urls import path
 from . import views
 import posts.views as posts_views
 import profiles.views as profiles_views
-
+import comments.views as comments_views
 
 urlpatterns = [
     ## Frontend  Templates ##
 
     path('', views.home, name='home'),
     path('bookmarked/', views.bookmarked, name='bookmarked'),
-    path('comment/', views.post_comment, name='comment'),
+
+    # Comments
+    path('seed/comment/', comments_views.post_comment, name='seed_comment'),
 
     # Interactables
     path('love/<str:type>/<int:id>/', views.love_content, name='love_content'),

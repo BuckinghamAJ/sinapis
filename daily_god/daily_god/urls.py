@@ -24,4 +24,5 @@ urlpatterns = [
     path('', include('frontend.urls')),
     path("__reload__/", include("django_browser_reload.urls")),
     path("accounts/", include("allauth.urls")),
+    path("comments/", include("django_comments.urls")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

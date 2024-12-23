@@ -2,7 +2,7 @@ from django.shortcuts import render
 from .forms import PostForm
 from .models import Post
 from django.http import HttpResponse
-
+from comments.forms import SeedCommentForm
 
 
 # Create your views here.

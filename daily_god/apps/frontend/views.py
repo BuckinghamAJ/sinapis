@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from django.views.decorators.http import require_http_methods
+
 
 from posts.models import Post
 from posts.forms import PostForm
@@ -8,9 +8,10 @@ from quotes.models import Quote
 from prayers.models import Prayer
 from itertools import chain
 
-# Django Comments
-from comments.forms import SeedCommentForm
 
+
+import django_comments
+from django_comments import signals
 
 # Create your views here.
 
@@ -121,12 +122,3 @@ def bookmark_content(request, type, id):
 
     return render(request, template, context=context)
 
-@require_http_methods(['POST'])
-def post_comment(request):
-    form = SeedCommentForm(request.POST)
-    if form.is_valid():
-        print(f'get_comment_create_data: {form.get_comment_create_data()}')
-        #form.save()
-        return HttpResponse('Comment saved')
-    else:
-        return HttpResponse('Form is invalid')

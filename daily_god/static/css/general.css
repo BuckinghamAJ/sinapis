@@ -2,3 +2,7 @@
     box-shadow: 0 0 10px 5px #ffd700;
     cursor: pointer;
 }
+
+#id_honeypot {
+    display: none;
+}

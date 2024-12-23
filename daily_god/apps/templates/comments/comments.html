@@ -33,12 +33,26 @@
                 Post</a>
     </button>
 
+    {% get_comment_form for content as form %}
+
+
     <form method="post"
             x-show="comment_open" 
             class="max-w-5xl bg-neutral rounded-lg border p-2 mx-auto mt-20 border-yellow-200"
             >
-        
+        {% csrf_token %}
+
         <input type="text" name="honeypot" style="display:none;">
+        <!--
+        <input type="hidden" name="content_type" value="{{ model }}">
+        <input type="hidden" name="object_pk" value="{{ content.id }}">
+        -->
+        {{ form.honeypot }}
+        {{ form.content_type }}
+        {{ form.object_pk }}
+        {{ form.timestamp }}
+        {{ form.security_hash }}
+
         <div class="flex py-3 mb-2 mt-2">
             <button type="button" 
                 class="btn btn-sm btn-circle btn-primary absolute right-2 top-2"
@@ -51,9 +65,9 @@
         </div>
         <div class="flex justify-end px-4">
             <button
-                hx-post="{% url 'comment' %}"
+                hx-post="{% url 'seed_comment' %}"
                 hx-push-url="false"
-                hx-target="{{type}}_{{content.id}}_comment_list"
+                hx-target="#{{type}}_{{content.id}}_comment_list"
                 hx-swap="innerHTML"
                 class="btn btn-outline btn-primary inline-flex cursor-pointer select-none flex-row
                 items-center border no-underline shadow-none transition
