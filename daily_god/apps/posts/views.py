@@ -3,21 +3,28 @@ from .forms import PostForm
 from .models import Post
 from django.http import HttpResponse
 from comments.forms import SeedCommentForm
+from django.core.cache import cache
 
 
 # Create your views here.
 
 def get_post(request, id):
-    try:
-        post = Post.objects.get(id=id)
-    except Post.DoesNotExist:
-        post = None
+    post = cache.get(f'post_{id}')
+    if not post:
+        try:
+            post = Post.objects.get(id=id)
+            cache.set(f'post_{id}', post)
+        except Post.DoesNotExist:
+            post = None
     
     if post:
         context = {
-            'post': post,
+            'content': post,
+            'type': 'post',
         }
-        return render(request, 'posts/post_modal.html', context=context)
+        return render(request, 'components/modal.html', context=context)
+    
+    return None
 
 def submit_new_post(request):
     

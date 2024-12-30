@@ -26,3 +26,8 @@ function shrinkCard(card) {
     card.querySelector('.truncated-content').classList.remove('hidden');
     card.querySelector('.full-content').classList.add('hidden');
 }
+
+
+function clearCommentForm() {
+    document.getElementById('comment-form').value = "";
+}

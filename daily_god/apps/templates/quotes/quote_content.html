@@ -1,7 +1,13 @@
 {% load static %}
 {% load _extras %}
 
-<div id="quote_card_{{quote.id}}" class="card card-compact bg-base-100 w-80 h-80 image-full shadow-xl mx-6" onmouseover="expandCard(this);" onmouseout="shrinkCard(this);">
+<a 
+    hx-get="quote/{{quote.id}}"
+    hx-target="#my_post_content"
+    hx-trigger="click"
+    hx-swap="outerHTML"
+    hx-push-url="false"
+    id="quote_card_{{quote.id}}" class="card card-compact bg-base-100 w-80 h-80 image-full shadow-xl mx-6 hover:shadow-gold-glow">
     <figure class="h-80 bckGround-image">
     {% if 'Meditation'|check_tag:quote %}
         <img
@@ -25,4 +31,4 @@
             {% include 'components/interactable.html' with content=quote type='quote' id=quote.id %}
         {% endif %}
     </div>
-</div>
+</a>

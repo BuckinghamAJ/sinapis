@@ -2,11 +2,11 @@
 
 {% partialdef heart-button %}
   <button id="modal_heart_button" class="btn btn-outline join-item"
-  hx-post="love/post/{{post.id}}/" hx-trigger="click"
+  hx-post="love/{{type}}/{{content.id}}/" hx-trigger="click"
   hx-vals='{"component": "modal_heart_button"}'
   hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
   hx-swap="outerHTML" hx-push-url="false" hx-target="#modal_heart_button">
-    {% if user in post.loved_by.all %}
+    {% if user in content.loved_by.all %}
         <svg  xmlns="http://www.w3.org/2000/svg" fill="#ffd700bd" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
             <path stroke-linecap="round" stroke-linejoin="round" d="M12 21l-1.45-1.316C5.4 15.36 2 12.28 2 8.5 2 5.41 4.42 3 7.5 3c1.74 0 3.41 1.19 4.5 2.5C13.09 4.19 14.76 3 16.5 3 19.58 3 22 5.41 22 8.5c0 3.78-3.4 6.86-8.55 11.18L12 21Z" />
         </svg>
@@ -20,12 +20,12 @@
 
 {% partialdef bookmark-button %}
   <button id='modal_bookmark_button' class="btn btn-outline join-item" 
-    hx-post="bookmark/post/{{post.id}}/" hx-trigger="click"
+    hx-post="bookmark/{{type}}/{{content.id}}/" hx-trigger="click"
     hx-vals='{"component": "modal_bookmark_button"}'
     hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
     hx-swap="outerHTML" hx-push-url="false" hx-target="#modal_bookmark_button">
     <!-- Bookmark button -->
-    {% if user in post.bookmarked_by.all %}
+    {% if user in content.bookmarked_by.all %}
       <svg xmlns="http://www.w3.org/2000/svg" fill="#ffd700bd" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
           <path stroke-linecap="round" stroke-linejoin="round" d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0 1 11.186 0Z" />
       </svg>
@@ -41,30 +41,28 @@
 
 <dialog x-ref="post_content_dialog" id="my_post_content" class="modal" @click="close_post_content_from_event(event)">
   <div class="modal-box w-11/12 max-w-4xl text-white">
-    <form method="dialog">
+    
+    {% if type == 'post'%}
+      {% include 'posts/modal.html' with post=content %}
+    {% elif type == 'prayer' or type == 'quote'%}
+      <form method="dialog" hx-get="{% url 'home' %}" hx-push-url="false" hx-target="#main_content" hx-trigger="click" hx-swap="outerHTML">
+        <!-- TODO: Update homepage on close-->
         <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
       </form>
-    <h2 class="text-2xl font-bold pb-2">{{post.title}}</h2>
-    
-    <div class="border border-yellow-200 rounded-lg p-2">
-      <div class="flex justify-end">
-        <a class="btn btn-primary" href="{{post.url}}" target="_blank">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
-          </svg>          
-        Read Post
-        </a>
+      <div class="border border-yellow-200 rounded-lg p-2 mt-8">
+        <p class="py-4">{{content.content}}</p>
       </div>
-      
-      <p class="py-4">{{post.summary}}</p>
-    </div>
+    {% else %}
+      <!-- Not expected -->
+    {% endif %}
+    
     <div class="card-actions justify-end">
-        <div class="badge self-center">{{post.posted_by.username}}</div>
+        <div class="badge self-center">{{content.posted_by.username}}</div>
         <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
           <div class="w-10 rounded-full">
             <img
               alt="Posted By Image"
-              src="{{ post.posted_by.profile.profile_pic.url }}" />
+              src="{{ content.posted_by.profile.profile_pic.url }}" />
           </div>
         </div>
     </div>
@@ -77,7 +75,7 @@
       {% partial bookmark-button %}
     </div>
 
-    {% include 'comments/comments.html' with content=post type='post' model='posts.Post' form=comment_form %}
+    {% include 'comments/comments.html' with form=comment_form %}
 
 
   </div>

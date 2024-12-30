@@ -3,6 +3,8 @@ from . import views
 import posts.views as posts_views
 import profiles.views as profiles_views
 import comments.views as comments_views
+import prayers.views as prayers_views
+import quotes.views as quotes_views
 
 urlpatterns = [
     ## Frontend  Templates ##
@@ -26,4 +28,10 @@ urlpatterns = [
     ### Posts ###
     path('post/<int:id>/', posts_views.get_post, name='get_post'),
     path('post/new/', posts_views.submit_new_post, name='submit_new_post'),
+
+    ### Prayers ###
+    path('prayer/<int:id>/', prayers_views.get_prayer, name='get_prayer'),
+
+    ### Quotes ###
+    path('quote/<int:id>/', quotes_views.get_quote, name='get_quote'),
 ]

@@ -1,7 +1,6 @@
 <div class="card-actions flex-grow items-end relative bottom-0">
     <!-- Love button -->
     <button class="btn btn-ghost btn-sm" hx-get="love/{{type}}/{{id}}" hx-trigger="click" hx-swap="outerHTML" hx-push-url="false" hx-target="#{{type}}_card_{{id}}">
-        <!-- TODO: Add check if post was loved to then adjust fill -->
         {% if user in content.loved_by.all %}
             <svg  xmlns="http://www.w3.org/2000/svg" fill="#ffd700bd" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 21l-1.45-1.316C5.4 15.36 2 12.28 2 8.5 2 5.41 4.42 3 7.5 3c1.74 0 3.41 1.19 4.5 2.5C13.09 4.19 14.76 3 16.5 3 19.58 3 22 5.41 22 8.5c0 3.78-3.4 6.86-8.55 11.18L12 21Z" />

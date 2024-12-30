@@ -37,3 +37,8 @@ class Post(models.Model):
 
     def __str__(self):
         return self.title
+    
+    class Meta:
+        indexes = [
+            models.Index(fields=['is_approved']),
+        ]
