@@ -14,6 +14,8 @@ urlpatterns = [
 
     # Comments
     path('seed/comment/', comments_views.post_comment, name='seed_comment'),
+    path('seed/comment/upvote/<int:id>/', comments_views.upvote, name='upvote_comment'),
+    path('seed/comment/downvote/<int:id>/', comments_views.downvote, name='downvote_comment'),
 
     # Interactables
     path('love/<str:type>/<int:id>/', views.love_content, name='love_content'),

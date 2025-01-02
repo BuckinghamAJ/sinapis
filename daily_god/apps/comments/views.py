@@ -15,9 +15,14 @@ from django.views.decorators.http import require_POST
 from django.views.decorators.csrf import csrf_protect
 from django.views.decorators.http import require_POST
 from django_comments.views.comments import CommentPostBadRequest
+from .models import SeedComment
+
+
 import django_comments
 from django_comments import signals
 from logging import getLogger
+
+
 log = getLogger('app')
 
 # Create your views here.
@@ -124,3 +129,45 @@ def post_comment(request, next=None, using=None):
     )
 
     return render(request, 'comments/comments.html#comment-list', {'content': target, })
+
+def get_comment(id):
+    comment = SeedComment.objects.filter(id=id).prefetch_related('upvoted_by', 'downvoted_by').first()
+    return comment
+
+def upvote(request, id):
+    comment = get_comment(id)
+
+    if comment and request.user not in comment.upvoted_by.all():
+        comment.upvoted_by.add(request.user)
+
+        if request.user in comment.downvoted_by.all():
+            comment.downvoted_by.remove(request.user)
+            comment.downvotes -= 1
+
+        comment.upvotes += 1
+    else:
+        comment.upvoted_by.remove(request.user)
+        comment.upvotes -= 1
+
+    comment.save()
+
+    return render(request, 'comments/comments.html#upvote-downvote', {'comment': comment })
+
+def downvote(request, id):
+    comment = get_comment(id)
+
+    if comment and request.user not in comment.downvoted_by.all():
+        comment.downvoted_by.add(request.user)
+
+        if request.user in comment.upvoted_by.all():
+            comment.upvoted_by.remove(request.user)
+            comment.upvotes -= 1
+
+        comment.downvotes += 1
+    else:
+        comment.downvoted_by.remove(request.user)
+        comment.downvotes -= 1
+
+    comment.save()
+
+    return render(request, 'comments/comments.html#upvote-downvote', {'comment': comment, })

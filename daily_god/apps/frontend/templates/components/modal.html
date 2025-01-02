@@ -46,9 +46,9 @@
     {% if type == 'post'%}
       {% include 'posts/modal.html' with post=content %}
     {% elif type == 'prayer' or type == 'quote'%}
-      <form method="dialog" :hx-get="getReferredPage()" hx-push-url="false" hx-target="#main_content" hx-trigger="click" hx-swap="innerHTML">
+      <form method="dialog">
         <!-- TODO: Update homepage on close-->
-        <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+        <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" @click="close_post_content()">✕</button>
       </form>
       <div class="border border-yellow-200 rounded-lg p-2 mt-8">
         <p class="py-4">{{content.content}}</p>

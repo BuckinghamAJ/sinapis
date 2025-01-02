@@ -3,8 +3,9 @@
 
 <!-- TODO: Include caching -->
 
-<form method="dialog" :hx-get="getReferredPage()" hx-push-url="false" hx-target="#main_content" hx-trigger="click" hx-swap="innerHTML">
-  <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+<form method="dialog" >
+  <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" 
+  @click="close_post_content()">✕</button>
 </form>
 
 <h2 class="text-2xl font-bold pb-2">{{post.title}}</h2>

@@ -15,3 +15,9 @@ class SeedComment(CommentAbstractModel):
 
     upvotes = models.PositiveIntegerField(default=0)
     downvotes = models.PositiveIntegerField(default=0)
+    
+    upvoted_by = models.ManyToManyField(User, related_name='upvoted_comments', 
+                                           blank=True)
+    
+    downvoted_by = models.ManyToManyField(User, related_name='downvoted_comments', 
+                                          blank=True)
