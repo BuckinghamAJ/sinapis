@@ -11,6 +11,10 @@ from .functions import love_content_by, bookmark_content_by
 
 import django_comments
 from django_comments import signals
+from logging import getLogger
+
+log = getLogger('app')
+
 
 # Create your views here.
 
@@ -45,7 +49,7 @@ def bookmarked(request):
 
 def love_content(request, type, id):
     context, template = love_content_by(request, type, id)
-    print(context)
+    log.debug(context)
     if request.method == 'POST':
         component = request.POST.get('component')
         match component:

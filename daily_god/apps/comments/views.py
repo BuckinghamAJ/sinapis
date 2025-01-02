@@ -17,6 +17,8 @@ from django.views.decorators.http import require_POST
 from django_comments.views.comments import CommentPostBadRequest
 import django_comments
 from django_comments import signals
+from logging import getLogger
+log = getLogger('app')
 
 # Create your views here.
 @csrf_protect
@@ -30,7 +32,7 @@ def post_comment(request, next=None, using=None):
     """
     # Fill out some initial data fields from an authenticated user, if present
     data = request.POST.copy()
-    print(data)
+    log.debug(data)
     if request.user.is_authenticated:
         if not data.get('name', ''):
             data["name"] = request.user.get_full_name() or request.user.get_username()
@@ -41,15 +43,15 @@ def post_comment(request, next=None, using=None):
     ctype = data.get("content_type")
     object_pk = data.get("object_pk")
 
-    print(f'ctype: {ctype}')
-    print(f'object_pk: {object_pk}')
+    log.debug(f'ctype: {ctype}')
+    log.debug(f'object_pk: {object_pk}')
     if ctype is None or object_pk is None:
         return CommentPostBadRequest("Missing content_type or object_pk field.")
     try:
         model = apps.get_model(*ctype.split(".", 1))
         target = model._default_manager.using(using).get(pk=object_pk)
     except (LookupError, TypeError) as e:
-        print(e)
+        log.error(e)
         return CommentPostBadRequest(
             "Invalid content_type value: %r" % escape(ctype))
     except AttributeError:

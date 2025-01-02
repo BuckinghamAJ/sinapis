@@ -13,9 +13,13 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 from pathlib import Path
 from django.db.utils import OperationalError
 from django.db import connections
+from django.utils.log import DEFAULT_LOGGING
+
 import environ
 import sys
 import os 
+import logging
+
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 APP_DIR = Path(PROJECT_ROOT, 'apps')
 
@@ -25,6 +29,8 @@ env = environ.Env(
 )
 
 SITE_ID = 1
+
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -77,6 +83,7 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount.providers.google',
     'django_comments',
+    'embed_video',
     "widget_tweaks",
     "slippers",
 ]
@@ -268,6 +275,45 @@ INTERNAL_IPS = [
 MEDIA_URL = '/media/'
 MEDIA_ROOT = Path(BASE_DIR, 'media')
 
+# Logging Settings
+
+LOG_LEVEL = os.environ.get("LOG_LEVEL", logging.DEBUG if DEBUG else logging.WARNING)
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    'formatters': {
+        'default': {
+            # exact format is not important, this is the minimum information
+            'format': '%(asctime)s %(name)-2s %(levelname)-2s %(message)s',
+        },
+        'django.server': DEFAULT_LOGGING['formatters']['django.server'],
+    },
+    "handlers": {
+        "console": {"class": "logging.StreamHandler" , "formatter": "default"},
+        # A null handler ignores the message
+        "null": {"level": "DEBUG", "class": "logging.NullHandler"},
+    },
+    "loggers": {
+        "": {
+            "handlers": ["console"],
+            "level": 'WARNING',
+        },
+        # Our application code
+        'app': {
+            'level': LOG_LEVEL,
+            'handlers': ['console'],
+            # Avoid double logging because of root logger
+            'propagate': False,
+        },
+        "django.security.DisallowedHost": {
+            # Redirect these messages to null handler
+            "handlers": ["null"],
+            # Don't let them reach the root-level handler
+            "propagate": False,
+        },
+    },
+}
 
 # All Auth Settings
 ACCOUNT_EMAIL_REQUIRED = True
@@ -279,9 +325,16 @@ ACCOUNT_USERNAME_MIN_LENGTH = 3
 # ALLAUTH UI Settings
 ALLAUTH_UI_THEME = "dark"
 
+# Django EMBED Video Settubgs
+EMBED_VIDEO_BACKENDS = (
+    'embed_video.backends.YoutubeBackend',
+    'embed_video.backends.VimeoBackend',
+)
+
 
 # Seedling App Settings
 TRUST_LEVEL_THRESHOLD = 10
+
 
 # TODO: Add Following Packages for Prod:
 # django-comments-xtd
