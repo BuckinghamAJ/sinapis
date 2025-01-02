@@ -13,7 +13,7 @@ def get_post(request, id):
     if not post:
         try:
             post = Post.objects.get(id=id)
-            cache.set(f'post_{id}', post)
+            cache.set(f'post_{id}', post, timeout=60*60) # Cache for 1 hour
         except Post.DoesNotExist:
             post = None
     
@@ -30,6 +30,7 @@ def submit_new_post(request):
     
     if request.method == 'POST':
         form = PostForm(request.POST)
+        
         if form.is_valid():
             post = form.save(commit=False)
             post.posted_by = request.user

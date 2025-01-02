@@ -31,3 +31,9 @@ function shrinkCard(card) {
 function clearCommentForm() {
     document.getElementById('comment-form').value = "";
 }
+
+function setHxGetAttribute() {
+    const referredPage = Alpine.store('seedling').referred_page;
+    const form = document.querySelector('form[method="dialog"]');
+    form.setAttribute('hx-get', `/` + referredPage);
+}

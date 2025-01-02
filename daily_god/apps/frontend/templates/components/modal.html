@@ -40,12 +40,13 @@
 
 
 <dialog x-ref="post_content_dialog" id="my_post_content" class="modal" @click="close_post_content_from_event(event)">
-  <div class="modal-box w-11/12 max-w-4xl text-white">
+  <div x-data="{ getReferredPage() { return $store.seedling.referred_page; } }" 
+      class="modal-box w-11/12 max-w-4xl text-white">
     
     {% if type == 'post'%}
       {% include 'posts/modal.html' with post=content %}
     {% elif type == 'prayer' or type == 'quote'%}
-      <form method="dialog" hx-get="{% url 'home' %}" hx-push-url="false" hx-target="#main_content" hx-trigger="click" hx-swap="outerHTML">
+      <form method="dialog" :hx-get="getReferredPage()" hx-push-url="false" hx-target="#main_content" hx-trigger="click" hx-swap="innerHTML">
         <!-- TODO: Update homepage on close-->
         <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
       </form>

@@ -33,6 +33,12 @@
                 document.getElementById('my_post_content').showModal();
                 }
             });
+
+            document.addEventListener('alpine:init', () => {
+                Alpine.store('seedling', {
+                    referred_page: '/'
+                })
+            })
         </script>
     </body>
 </html>
