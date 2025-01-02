@@ -3,6 +3,9 @@ from django.contrib.auth.models import User
 from taggit.managers import TaggableManager
 from django.conf import settings
 from profanity.validators import validate_is_profane
+from embed_video.fields import EmbedVideoField
+
+
 
 # Create your models here.
 class Post(models.Model):
@@ -14,6 +17,8 @@ class Post(models.Model):
     posted_by = models.ForeignKey(User, on_delete=models.CASCADE)  
     loves = models.PositiveIntegerField(default=0)
     tags = TaggableManager(blank=True)
+
+    video = EmbedVideoField(null=True, blank=True)
     
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -32,8 +37,17 @@ class Post(models.Model):
             not self.posted_by.profile.is_banned and\
             not self.posted_by.profile.under_review:  # Adjust the trust level threshold as needed
             
+            if self.url_to_embeded_video(self.url):
+                self.video = self.url
+
             self.is_approved = True
         super().save(*args, **kwargs)
+
+    @staticmethod
+    def url_to_embeded_video(url):
+        if 'youtube' in url or 'vimeo' in url:
+            return True
+        return False
 
     def __str__(self):
         return self.title
