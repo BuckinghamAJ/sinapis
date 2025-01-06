@@ -3,7 +3,14 @@ from posts.forms import PostForm
 from quotes.models import Quote
 from prayers.models import Prayer
 from itertools import chain
+import re
 
+def extract_text_between(text, start, end):
+    pattern = re.compile(f'({start}.*?{end})', re.DOTALL)
+    match = pattern.search(text)
+    if match:
+        return match.group(1)
+    return None 
 
 def love_content_by(request, type: str, id: int) -> tuple:
     """
