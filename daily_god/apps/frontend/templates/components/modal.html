@@ -1,11 +1,15 @@
 {% load partials %}
+{% load _extras %}
 
 {% partialdef heart-button %}
+{% auth_button %}
   <button id="modal_heart_button" class="btn btn-outline join-item"
+  auth_start
   hx-post="love/{{type}}/{{content.id}}/" hx-trigger="click"
   hx-vals='{"component": "modal_heart_button"}'
   hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
-  hx-swap="outerHTML" hx-push-url="false" hx-target="#modal_heart_button">
+  hx-swap="outerHTML" hx-push-url="false" hx-target="#modal_heart_button"
+  auth_end >
     {% if user in content.loved_by.all %}
         <svg  xmlns="http://www.w3.org/2000/svg" fill="#ffd700bd" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
             <path stroke-linecap="round" stroke-linejoin="round" d="M12 21l-1.45-1.316C5.4 15.36 2 12.28 2 8.5 2 5.41 4.42 3 7.5 3c1.74 0 3.41 1.19 4.5 2.5C13.09 4.19 14.76 3 16.5 3 19.58 3 22 5.41 22 8.5c0 3.78-3.4 6.86-8.55 11.18L12 21Z" />
@@ -16,14 +20,18 @@
         </svg>
     {% endif %}
   </button>
+{% endauth_button %}
 {% endpartialdef heart-button %}
 
 {% partialdef bookmark-button %}
-  <button id='modal_bookmark_button' class="btn btn-outline join-item" 
+{% auth_button %}
+  <button id='modal_bookmark_button' class="btn btn-outline join-item"
+    auth_start 
     hx-post="bookmark/{{type}}/{{content.id}}/" hx-trigger="click"
     hx-vals='{"component": "modal_bookmark_button"}'
     hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
-    hx-swap="outerHTML" hx-push-url="false" hx-target="#modal_bookmark_button">
+    hx-swap="outerHTML" hx-push-url="false" hx-target="#modal_bookmark_button"
+    auth_end >
     <!-- Bookmark button -->
     {% if user in content.bookmarked_by.all %}
       <svg xmlns="http://www.w3.org/2000/svg" fill="#ffd700bd" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
@@ -35,7 +43,7 @@
       </svg>
     {% endif %}
   </button>
-
+{% endauth_button %}
 {% endpartialdef bookmark-button %}
 
 
@@ -70,11 +78,13 @@
 
 
 
+    
     <div class="join">
       {% partial heart-button %}
 
       {% partial bookmark-button %}
     </div>
+    
 
     {% include 'comments/comments.html' with form=comment_form %}
 

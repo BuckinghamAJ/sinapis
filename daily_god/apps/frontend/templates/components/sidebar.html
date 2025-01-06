@@ -1,4 +1,4 @@
-
+{% load _extras %}
 
 <div class="drawer-side border-x-2 border-b-2 border-gray-500">
   <label for="my-drawer-2" aria-label="close sidebar" class="drawer-overlay"></label>
@@ -17,7 +17,10 @@
         Explore
       </a>
     </li>
-    <li><a class="hover:bg-gray-700" @click="$store.seedling.referred_page = '/bookmarked/' " hx-get="{% url 'bookmarked' %}" hx-push-url="false" hx-target="#main_content" hx-trigger="click" hx-swap="innerHTML">Bookmarks</a></li>
 
+    {% auth_button %}
+    <li><a class="hover:bg-gray-700" 
+      auth_start @click="$store.seedling.referred_page = '/bookmarked/' " hx-get="{% url 'bookmarked' %}" hx-push-url="false" hx-target="#main_content" hx-trigger="click" hx-swap="innerHTML" auth_end>Bookmarks</a></li>
+    {% endauth_button %}
   </ul>
 </div>
