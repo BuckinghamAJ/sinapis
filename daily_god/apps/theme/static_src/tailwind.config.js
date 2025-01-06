@@ -42,7 +42,13 @@ module.exports = {
         // '../../**/*.py'
     ],
     theme: {
-        extend: {},
+        extend: {
+            inset: {
+                '-8': '-2rem',
+                '-16': '-4rem',
+            
+            }
+        },
     },
     plugins: [
         /**

@@ -1,28 +1,33 @@
 {% load static %}
 
-<a 
-    hx-get="prayer/{{prayer.id}}"
-    hx-target="#my_post_content"
-    hx-trigger="click"
-    hx-swap="outerHTML"
-    hx-push-url="false"
-    id="prayer_card_{{prayer.id}}" class="card card-compact bg-base-100 w-80 h-80 image-full shadow-xl mx-6 hover:shadow-gold-glow">
-    
-    
-    <figure class="h-80">
-        <img 
-            src="{% static '/img/prayer_img_v2.jpg' %}"
-            alt="prayer" />
-    </figure>
-    <div class="card-body">
-        <div class="">
-            <p class="font-sans font-semibold text-white truncated-content">{{prayer.content | truncatewords:90 }}</p>
-            <p class="font-sans font-semibold text-white hidden full-content">"{{prayer.content}}" </p>
+<div class="relative">
+    <a 
+        hx-get="prayer/{{prayer.id}}"
+        hx-target="#my_post_content"
+        hx-trigger="click"
+        hx-swap="outerHTML"
+        hx-push-url="false"
+        id="prayer_card_{{prayer.id}}" class="card card-compact bg-base-100 w-80 h-80 image-full shadow-xl mx-6 hover:shadow-gold-glow z-0">
+        
+        
+        <figure class="h-80">
+            <img 
+                src="{% static '/img/prayer_img_v2.jpg' %}"
+                alt="prayer" />
+        </figure>
+        <div class="card-body">
+            <div class="">
+                <p class="font-sans font-semibold text-white truncated-content">{{prayer.content | truncatewords:90 }}</p>
+                <p class="font-sans font-semibold text-white hidden full-content">"{{prayer.content}}" </p>
+            </div>
+        
+            
         </div>
-    
+        
+    </a>
+    <div class="card-body absolute sm:-bottom-8 lg:bottom-10 z-10">
         {% if user.is_authenticated %}
             {% include 'components/interactable.html' with content=prayer type='prayer' id=prayer.id %}
         {% endif %}
     </div>
-    
-</a>
+</div>
