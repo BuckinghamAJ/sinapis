@@ -75,7 +75,10 @@
                hx-swap="outerHTML">Forgot password?</a>
         </div>
         
-        <button class="my-3 btn btn-primary" hx-post="{% url 'profile_login' %}" hx-target="#login" hx-swap="outerHTML">Sign In</button>
+        <button class="my-3 btn btn-primary" 
+        hx-post="{% url 'profile_login' %}" 
+        hx-target="#login" 
+        hx-swap="outerHTML">Sign In</button>
     </form>
 </div>
 

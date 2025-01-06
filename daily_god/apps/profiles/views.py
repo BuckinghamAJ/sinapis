@@ -28,7 +28,7 @@ def request_login(request):
             form.clean()
             form.login(request, redirect_url=reverse_lazy('home'))
             response = home(request)
-            return retarget(response, '#full_body')
+            return retarget(response, '#main_content')
         else:
             context = {'errors': form.errors}
             return render(request, 'profiles/login.html', context)
@@ -40,4 +40,5 @@ def request_account_reset(request):
 
 def profile_logout(request):
     logout(request)
-    return render(request, 'components/topbar.html')
+
+    return home(request)
