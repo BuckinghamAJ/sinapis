@@ -1,5 +1,6 @@
 {% load comments %}
 {% load partials %}
+{% load _extras %}
 
 {% partialdef upvote-downvote %}
     <div id="upvote_downvote" class="scale-75 join">
@@ -57,25 +58,27 @@
 
 <div x-data="{ comment_open: false }" class="relative">
     
-    <button x-show="!comment_open" x-on:click="comment_open = ! comment_open" 
-        type="button" 
-        class="flex w-full items-center gap-4 rounded-md border-2 border-yellow-200
-        p-3 typo-callout hover:border-gray-200 
-        hover:bg-surface-hover tablet:border tablet:bg-surface-float 
-        mt-6 tablet:flex hover:bg-neutral">
-        <img class="object-cover w-10 h-10 rounded-12 hidden tablet:flex"
-             loading="lazy" type="avatar" fetchpriority="auto" alt="adamjbuckingham's profile" 
-             src="https://avatars.githubusercontent.com/u/48027257?v=4&amp;s=64">
-             <span class="text-text-tertiary">Share your thoughts</span>
-             <a disabled="" class="btn btn-outline inline-flex cursor-pointer select-none flex-row
-                items-center border no-underline shadow-none transition
-                duration-200 ease-in-out typo-callout justify-center font-bold 
-                h-10 px-5 ml-auto text-text-primary tablet:flex">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M8.625 9.75a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375m-13.5 3.01c0 1.6 1.123 2.994 2.707 3.227 1.087.16 2.185.283 3.293.369V21l4.184-4.183a1.14 1.14 0 0 1 .778-.332 48.294 48.294 0 0 0 5.83-.498c1.585-.233 2.708-1.626 2.708-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0 0 12 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018Z" />
-                  </svg>                  
-                Post</a>
-    </button>
+    {% auth_button 'x-show="!comment_open" x-on:click="comment_open = ! comment_open"' %}
+        <button x-show="!comment_open" x-on:click="comment_open = ! comment_open" 
+            type="button" 
+            class="flex w-full items-center gap-4 rounded-md border-2 border-yellow-200
+            p-3 typo-callout hover:border-gray-200 
+            hover:bg-surface-hover tablet:border tablet:bg-surface-float 
+            mt-6 tablet:flex hover:bg-neutral">
+            <img class="object-cover w-10 h-10 rounded-12 hidden tablet:flex"
+                loading="lazy" type="avatar" fetchpriority="auto" alt="adamjbuckingham's profile" 
+                src="https://avatars.githubusercontent.com/u/48027257?v=4&amp;s=64">
+                <span class="text-text-tertiary">Share your thoughts</span>
+                <a disabled="" class="btn btn-outline inline-flex cursor-pointer select-none flex-row
+                    items-center border no-underline shadow-none transition
+                    duration-200 ease-in-out typo-callout justify-center font-bold 
+                    h-10 px-5 ml-auto text-text-primary tablet:flex">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M8.625 9.75a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375m-13.5 3.01c0 1.6 1.123 2.994 2.707 3.227 1.087.16 2.185.283 3.293.369V21l4.184-4.183a1.14 1.14 0 0 1 .778-.332 48.294 48.294 0 0 0 5.83-.498c1.585-.233 2.708-1.626 2.708-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0 0 12 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018Z" />
+                    </svg>                  
+                    Post</a>
+        </button>
+    {% endauth_button %}
 
     {% get_comment_form for content as form %}
 
