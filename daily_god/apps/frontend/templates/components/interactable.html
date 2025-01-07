@@ -1,4 +1,4 @@
-<div class="card-actions flex-grow items-end relative bottom-0">
+<div class="card-actions flex items-end relative bottom-0">
     <!-- Love button -->
     <button class="btn btn-ghost btn-sm love-button" hx-get="love/{{type}}/{{id}}" hx-trigger="click" hx-swap="outerHTML" hx-push-url="false" hx-target="#{{type}}_card_{{id}}">
         {% if user in content.loved_by.all %}

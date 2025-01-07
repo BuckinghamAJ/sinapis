@@ -25,7 +25,7 @@
         </div>
         
     </a>
-    <div class="card-body absolute sm:-bottom-8 lg:bottom-10 z-10">
+    <div class="card-body w-full absolute sm:-bottom-8 lg:bottom-10 z-10">
         {% if user.is_authenticated %}
             {% include 'components/interactable.html' with content=prayer type='prayer' id=prayer.id %}
         {% endif %}
