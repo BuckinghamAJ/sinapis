@@ -1,13 +1,13 @@
 {% load static %}
 
-<div class="relative">
+<div class="relative" id="prayer_card_{{prayer.id}}">
     <a 
         hx-get="prayer/{{prayer.id}}"
         hx-target="#my_post_content"
         hx-trigger="click"
         hx-swap="outerHTML"
         hx-push-url="false"
-        id="prayer_card_{{prayer.id}}" class="card card-compact bg-base-100 w-80 h-80 image-full shadow-xl mx-6 hover:shadow-gold-glow z-0">
+        class="card card-compact bg-base-100 w-80 h-80 image-full shadow-xl mx-6 hover:shadow-gold-glow z-0">
         
         
         <figure class="h-80">
