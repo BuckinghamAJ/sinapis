@@ -40,6 +40,7 @@ class Post(models.Model):
             if self.url_to_embeded_video(self.url):
                 self.video = self.url
 
+            self.is_pending = False
             self.is_approved = True
         super().save(*args, **kwargs)
 

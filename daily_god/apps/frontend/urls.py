@@ -33,7 +33,9 @@ urlpatterns = [
 
     ### Prayers ###
     path('prayer/<int:id>/', prayers_views.get_prayer, name='get_prayer'),
+    path('prayer/new/', prayers_views.submit_new_prayer, name='submit_new_prayer'),
 
     ### Quotes ###
     path('quote/<int:id>/', quotes_views.get_quote, name='get_quote'),
+    path('quote/new/', quotes_views.submit_new_quote, name='submit_new_quote'),
 ]
