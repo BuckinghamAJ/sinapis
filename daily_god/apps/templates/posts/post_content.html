@@ -1,7 +1,7 @@
 {% load embed_video_tags %}
 
 
-<div id='post_card_{{post.id}}' class="card card-compact bg-base-100 w-80 h-80 shadow-xl mx-6 hover:shadow-gold-glow">
+<div id='post_card_{{post.id}}' class="card card-compact bg-base-100 w-80 h-80 shadow-xl hover:shadow-gold-glow">
   <a hx-get="post/{{post.id}}"
      hx-target="#my_post_content"
      hx-trigger="click"

@@ -16,7 +16,7 @@
         {% tailwind_css %}
     </head>
     <body>
-        <div id="main_content" class="h-100dvh absolute w-screen"  x-data="{ close_new_post_modal() { $refs.new_post_dialog.close() },
+        <div class="h-100dvh absolute w-screen"  x-data="{ close_new_post_modal() { $refs.new_post_dialog.close() },
                        close_npm_from_event(event) {
                             if (event.currentTarget === event.target) {
                                 this.close_new_post_modal();

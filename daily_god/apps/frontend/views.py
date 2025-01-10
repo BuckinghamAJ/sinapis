@@ -7,7 +7,7 @@ from quotes.models import Quote
 from prayers.models import Prayer
 from itertools import chain
 
-from .functions import love_content_by, bookmark_content_by
+from .functions import love_content_by, bookmark_content_by, home_query, bookmark_query_for_user
 
 import django_comments
 from django_comments import signals
@@ -20,32 +20,29 @@ log = getLogger('app')
 
 def home(request):
     
-    latest_posts = Post.objects.filter(is_approved=True).select_related('posted_by').prefetch_related('tags').order_by('-created_at')[:50]
-    latest_quotes = Quote.objects.filter(is_approved=True).select_related('posted_by').prefetch_related('tags').order_by('-created_at')[:50]
-    latest_prayers = Prayer.objects.filter(is_approved=True).select_related('posted_by').prefetch_related('tags').order_by('-created_at')[:50]
-
-    content = list(chain(latest_posts, latest_quotes, latest_prayers))
+    content = home_query()
 
     context = {
         'content': content,
     }
 
+    if request.GET.get('component') == 'sidebar':
+        return render(request, 'content.html#content-list', context=context)
+        
+
     return render(request, 'index.html', context)
+
 
 def bookmarked(request):
     
-    bookmarked_posts = Post.objects.filter(bookmarked_by=request.user).select_related('posted_by').prefetch_related('tags')
-    bookmarked_quotes = Quote.objects.filter(bookmarked_by=request.user).select_related('posted_by').prefetch_related('tags')
-    bookmarked_prayers = Prayer.objects.filter(bookmarked_by=request.user).select_related('posted_by').prefetch_related('tags')
-
-    bookmarked_content = list(chain(bookmarked_posts, bookmarked_quotes, bookmarked_prayers))
+    content = bookmark_query_for_user(request.user)
 
     context = {
-        'content': bookmarked_content,
+        'content': content,
         'user': request.user,
     }
 
-    return render(request, 'index.html', context=context)
+    return render(request, 'content.html#content-list', context=context)
 
 def love_content(request, type, id):
     context, template = love_content_by(request, type, id)

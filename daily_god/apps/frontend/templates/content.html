@@ -1,15 +1,6 @@
 {% load _extras %}
 
-<!-- Main Section -->
-<div class="m-2 flex flex-wrap gap-2 column-4 h-dvh pt-8 pb-24 pl-6 overflow-y-auto justify-center" 
-    x-data="{   close_post_content() {$refs.post_content_dialog.close()},
-                close_post_content_from_event(event) {
-                    if (event.currentTarget === event.target) {
-                        this.close_post_content();
-                    }
-                },  
-    }"
->
+{% partialdef content-list %}
     {% for c in content %}
         {% with obj_name=c|class_name %}
             {% if obj_name == 'Post' %}
@@ -21,6 +12,19 @@
             {% endif %}
         {% endwith %}
     {% endfor %}
+{% endpartialdef content-list %}
+
+<!-- Main Section -->
+<div id="main_content" class="m-2 flex flex-wrap gap-12 column-4 h-dvh pt-8 pb-24 pl-6 overflow-y-auto justify-center" 
+    x-data="{   close_post_content() {$refs.post_content_dialog.close()},
+                close_post_content_from_event(event) {
+                    if (event.currentTarget === event.target) {
+                        this.close_post_content();
+                    }
+                },  
+    }"
+>
+    {% partial content-list %}
 </div>
 
 {% include 'posts/new_post.html' %}

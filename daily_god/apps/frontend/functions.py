@@ -5,6 +5,30 @@ from prayers.models import Prayer
 from itertools import chain
 import re
 
+def home_query():
+    latest_posts = Post.objects.filter(is_approved=True).select_related('posted_by').prefetch_related('tags').order_by('-created_at')[:50]
+    latest_quotes = Quote.objects.filter(is_approved=True).select_related('posted_by').prefetch_related('tags').order_by('-created_at')[:50]
+    latest_prayers = Prayer.objects.filter(is_approved=True).select_related('posted_by').prefetch_related('tags').order_by('-created_at')[:50]
+
+    content = list(chain(latest_posts, latest_quotes, latest_prayers))
+
+     # Sort by number of loves first, then by created_at date
+    content_sorted = sorted(content, key=lambda x: (-x.loves, -x.created_at.timestamp()))
+
+    return content_sorted
+
+def bookmark_query_for_user(user):
+    bookmarked_posts = Post.objects.filter(bookmarked_by=user).select_related('posted_by').prefetch_related('tags')
+    bookmarked_quotes = Quote.objects.filter(bookmarked_by=user).select_related('posted_by').prefetch_related('tags')
+    bookmarked_prayers = Prayer.objects.filter(bookmarked_by=user).select_related('posted_by').prefetch_related('tags')
+    
+    bookmarked_content = list(chain(bookmarked_posts, bookmarked_quotes, bookmarked_prayers))
+    
+    # Sort by number of loves first, then by created_at date
+    content_sorted = sorted(bookmarked_content, key=lambda x: (-x.loves, -x.created_at.timestamp()))
+    
+    return content_sorted
+
 def extract_text_between(text, start, end):
     pattern = re.compile(f'({start}.*?{end})', re.DOTALL)
     match = pattern.search(text)
