@@ -1,6 +1,9 @@
 from django.shortcuts import render
 from .models import Quote
 from .forms import QuoteForm
+import logging
+
+logger = logging.getLogger('app')
 # Create your views here.
 
 def get_quote(request, id):
@@ -26,5 +29,7 @@ def submit_new_quote(request):
             prayer = form.save(commit=False)
             prayer.posted_by = request.user
             prayer.save()
+        
+        logger.debug(f'Form Errors: {form.errors}')
 
     return render(request, 'posts/new_post.html#prayer-quote-form')

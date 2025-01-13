@@ -1,7 +1,7 @@
 {% load embed_video_tags %}
 
 
-<div id='post_card_{{post.id}}' class="card card-compact bg-base-100 w-80 h-80 shadow-xl hover:shadow-gold-glow">
+<div id='post_card_{{post.id}}' class=" z-0 card card-compact bg-base-100 w-80 h-80 shadow-xl hover:shadow-gold-glow">
   <a hx-get="post/{{post.id}}"
      hx-target="#my_post_content"
      hx-trigger="click"
@@ -28,7 +28,9 @@
     </div>
   </a>
   <!-- TODO: Make a modal pop up instead for login.-->
-  {% if user.is_authenticated %}
-    {% include 'components/interactable.html' with content=post type='post' id=post.id %}
-  {% endif %}
+  <div class="z-10 w-full">
+    {% if user.is_authenticated %}
+      {% include 'components/interactable.html' with content=post type='post' id=post.id %}
+    {% endif %}
+  </div>
 </div>

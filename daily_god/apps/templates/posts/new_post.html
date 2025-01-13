@@ -35,12 +35,19 @@
     </div>
 {% endpartialdef post-form %}
 
-
+<!--TODO: Make function to grab the type value?-->
 {% partialdef prayer-quote-form %}
-    <div class="pt-7 pb-3"  x-data="{ type: 'quote' }">
+    <div class="pt-7 pb-3"  
+         x-data="{ type: 'quote',
+                   shouldBeRequired() { return this.type == 'quote' },
+                   placeholderText() { return this.type == 'quote' ? 'Author*' : 'Author' },
+                   grabPostURL() { return this.type + '/new/' }      
+                 }"
+         x-init="$watch('type', value => { htmx.process(document.querySelector('#submit_prayer_quote')) })">
+                 
         <div class="mb-4">
-            <label class="input input-bordered flex items-center gap-2">
-                <input type="text" name="author" class="grow border-0" placeholder="Author*" required/>
+            <label class="input input-bordered flex items-Ecenter gap-2">
+                <input type="text" name="author" class="grow border-0" :placeholder="placeholderText()" :required="shouldBeRequired()"/>
             </label>
         </div>
 
@@ -60,10 +67,9 @@
             <input type="radio" name="type" x-model="type" value="prayer" class=" radio radio-primary ml-4" required> Prayer
         </div>
 
-        <!--TODO: Add path for new quote-->
         <div class="text-end">
-            <button class="btn btn-outline btn-primary" 
-                    :hx-post="`/${type}/new/`"
+            <button id="submit_prayer_quote" class="btn btn-outline btn-primary" 
+                    :hx-post="grabPostURL()"
                     hx-push-url="false"
                     hx-target="#post_form"
                     hx-swap="innerHTML"
@@ -112,3 +118,9 @@
 
     </div>
 </dialog>
+
+<script>
+
+
+
+</script>

@@ -34,8 +34,6 @@ def home(request):
         'content': pg_content,
     }
 
-
-
     if request.GET.get('component') == 'sidebar':
         return render(request, 'content.html#content-list', context=context)
         
