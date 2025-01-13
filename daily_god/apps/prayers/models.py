@@ -1,13 +1,13 @@
 from django.db import models
 from django.contrib.auth.models import User
 from taggit.managers import TaggableManager
-from profanity.validators import validate_is_profane
+from frontend.validators import validate_is_profane
 from django.conf import settings
 
 # Create your models here.
 
 class Prayer(models.Model):
-    author = models.CharField(max_length=100)
+    author = models.CharField(max_length=100, blank=True)
     content = models.TextField(validators=[validate_is_profane])
     posted_by = models.ForeignKey(User, on_delete=models.CASCADE)
     citation = models.CharField(max_length=100, blank=True)

@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from taggit.managers import TaggableManager
-from profanity.validators import validate_is_profane
+from frontend.validators import validate_is_profane
 from django.conf import settings
 
 # Create your models here.

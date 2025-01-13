@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django_comments.abstracts import CommentAbstractModel
 from django.conf import settings
 from django.utils.translation import gettext_lazy as _
-from profanity.validators import validate_is_profane
+from frontend.validators import validate_is_profane
 
 
 COMMENT_MAX_LENGTH = getattr(settings, 'COMMENT_MAX_LENGTH', 3000)
