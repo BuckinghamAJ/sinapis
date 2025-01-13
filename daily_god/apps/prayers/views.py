@@ -30,7 +30,10 @@ def submit_new_prayer(request):
             prayer = form.save(commit=False)
             prayer.posted_by = request.user
             prayer.save()
-        
-        logger.debug(f'Form Errors: {form.errors}')
+        else:
+            logger.debug(f'Form Errors: {form.errors}')
+            context = {'errors': form.errors}
+            return render(request, 'posts/new_post.html#prayer-quote-form', context)
+
 
     return render(request, 'posts/new_post.html#prayer-quote-form')

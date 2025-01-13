@@ -2,10 +2,18 @@
 
 {% partialdef post-form %}
     <div class="pt-7 pb-3">
+        {% csrf_token %}
         <div>
             <label class="input input-bordered flex items-center gap-2">
                 <input type="text" name="title" class="grow border-0" placeholder="Title of Post*" required/>
             </label>
+            {% if errors.title %}
+            <div class="alert alert-error">
+                {% for error in errors.title %}
+                    <p>{{ error }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
         </div>
 
         <div class ="py-4">
@@ -13,10 +21,24 @@
                 <input type="url" name="url" class="border-0 grow" placeholder="URL Link*"
                     pattern="https://.*" size="30" required/>
             </label>
+            {% if errors.url %}
+            <div class="alert alert-error">
+                {% for error in errors.url %}
+                    <p>{{ error }}</p>
+                {% endfor %}
+            </div>
+            {% endif %}
         </div>
 
         <div class="pb-2">
             <textarea name="summary" class="textarea textarea-bordered h-44 w-full" placeholder="Summarize Post*" required></textarea>
+            {% if errors.summary %}
+            <div class="alert alert-error">
+                {% for error in errors.summary %}
+                    <p>{{ error }}</p>
+                {% endfor %}
+            </div>
+            {% endif %}
         </div>
 
         <div class="text-end">
@@ -24,8 +46,7 @@
                     hx-post="post/new/"
                     hx-push-url="false"
                     hx-target="#post_form"
-                    hx-swap="innerHTML"
-                    @click="close_new_post_modal()">           
+                    hx-swap="innerHTML">           
                 Submit
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 7.5h-.75A2.25 2.25 0 0 0 4.5 9.75v7.5a2.25 2.25 0 0 0 2.25 2.25h7.5a2.25 2.25 0 0 0 2.25-2.25v-7.5a2.25 2.25 0 0 0-2.25-2.25h-.75m0-3-3-3m0 0-3 3m3-3v11.25m6-2.25h.75a2.25 2.25 0 0 1 2.25 2.25v7.5a2.25 2.25 0 0 1-2.25 2.25h-7.5a2.25 2.25 0 0 1-2.25-2.25v-.75" />
@@ -44,21 +65,42 @@
                    grabPostURL() { return this.type + '/new/' }      
                  }"
          x-init="$watch('type', value => { htmx.process(document.querySelector('#submit_prayer_quote')) })">
-                 
+        {% csrf_token %}         
         <div class="mb-4">
             <label class="input input-bordered flex items-Ecenter gap-2">
                 <input type="text" name="author" class="grow border-0" :placeholder="placeholderText()" :required="shouldBeRequired()"/>
             </label>
+            {% if errors.author %}
+            <div class="alert alert-error">
+                {% for error in errors.author %}
+                    <p>{{ error }}</p>
+                {% endfor %}
+            </div>
+            {% endif %}
         </div>
 
         <div class="mb-4">
             <label class="input input-bordered flex items-center gap-2">
                 <input type="text" name="citation" class="grow border-0" placeholder="Citation"/>
             </label>
+            {% if errors.citation %}
+            <div class="alert alert-error">
+                {% for error in errors.citation %}
+                    <p>{{ error }}</p>
+                {% endfor %}
+            </div>
+            {% endif %}
         </div>
 
         <div class="pb-2">
             <textarea name="content" class="textarea textarea-bordered h-44 w-full" placeholder="Insert Quote/Prayer Here*" required></textarea>
+            {% if errors.content %}
+            <div class="alert alert-error">
+                {% for error in errors.content %}
+                    <p>{{ error }}</p>
+                {% endfor %}
+            </div>
+            {% endif %}
         </div>
 
         <div class="mb-4">
@@ -71,9 +113,9 @@
             <button id="submit_prayer_quote" class="btn btn-outline btn-primary" 
                     :hx-post="grabPostURL()"
                     hx-push-url="false"
-                    hx-target="#post_form"
+                    hx-target="#quote_prayer_form"
                     hx-swap="innerHTML"
-                    @click="close_new_post_modal()">           
+                    >           
                 Submit
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 7.5h-.75A2.25 2.25 0 0 0 4.5 9.75v7.5a2.25 2.25 0 0 0 2.25 2.25h7.5a2.25 2.25 0 0 0 2.25-2.25v-7.5a2.25 2.25 0 0 0-2.25-2.25h-.75m0-3-3-3m0 0-3 3m3-3v11.25m6-2.25h.75a2.25 2.25 0 0 1 2.25 2.25v7.5a2.25 2.25 0 0 1-2.25 2.25h-7.5a2.25 2.25 0 0 1-2.25-2.25v-.75" />
@@ -103,16 +145,12 @@
         </div>
         
    
-        <form x-show="post_tab" method="dialog" id="post_form">
-            {% csrf_token %}
-            
+        <form x-show="post_tab" method="dialog" id="post_form">            
             {% partial post-form %}
         </form>
         
         
-        <form method="dialog" id="post_form" x-show="quote_tab">
-            {% csrf_token %}
-            
+        <form method="dialog" id="quote_prayer_form" x-show="quote_tab">
             {% partial prayer-quote-form %}
         </form>
 

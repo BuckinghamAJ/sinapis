@@ -4,7 +4,9 @@ from .models import Post
 from django.http import HttpResponse
 from comments.forms import SeedCommentForm
 from django.core.cache import cache
+import logging
 
+logger = logging.getLogger('app')
 
 # Create your views here.
 
@@ -35,5 +37,8 @@ def submit_new_post(request):
             post = form.save(commit=False)
             post.posted_by = request.user
             post.save()
-
+        else:
+            logger.debug(f'Form Errors: {form.errors}')
+            context = {'errors': form.errors}
+            return render(request, 'posts/new_post.html#post-form', context)
     return render(request, 'posts/new_post.html#post-form')
