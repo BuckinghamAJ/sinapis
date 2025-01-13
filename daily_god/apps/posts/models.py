@@ -46,7 +46,10 @@ class Post(models.Model):
 
     @staticmethod
     def url_to_embeded_video(url):
-        if 'youtube' in url or 'vimeo' in url:
+        url = url.lower()
+        if (('youtube' in url) or
+            ('youtu.be' in url) or
+            ('vimeo' in url)):
             return True
         return False
 
