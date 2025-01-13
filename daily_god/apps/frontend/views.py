@@ -12,6 +12,8 @@ from .functions import love_content_by, bookmark_content_by, home_query, bookmar
 import django_comments
 from django_comments import signals
 from logging import getLogger
+from django.core.paginator import Paginator
+
 
 log = getLogger('app')
 
@@ -19,12 +21,20 @@ log = getLogger('app')
 # Create your views here.
 
 def home(request):
-    
+    page_number = request.GET.get('page', 1)
     content = home_query()
 
+    # TODO: Infinite Pagination with Scroll: https://aisaastemplate.com/blog/guide-django-pagination/
+    paginator = Paginator(content, 16) # Show 10 content per page.
+
+    pg_content = paginator.get_page(page_number)
+
+
     context = {
-        'content': content,
+        'content': pg_content,
     }
+
+
 
     if request.GET.get('component') == 'sidebar':
         return render(request, 'content.html#content-list', context=context)

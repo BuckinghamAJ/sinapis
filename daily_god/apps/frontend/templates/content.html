@@ -11,6 +11,14 @@
                 {% include 'quotes/quote_content.html' with quote=c %}
             {% endif %}
         {% endwith %}
+
+        {% if page_obj.has_next and forloop.last %}
+        <span hx-get="{% url 'articles' %}?page={{ page_obj.next_page_number }}"
+              hx-swap="beforeend" hx-target="#main_content"
+              hx-push-url="false"
+              hx-trigger="revealed">
+            </span>
+        {% endif %}
     {% endfor %}
 {% endpartialdef content-list %}
 

@@ -6,9 +6,9 @@ from itertools import chain
 import re
 
 def home_query():
-    latest_posts = Post.objects.filter(is_approved=True).select_related('posted_by').prefetch_related('tags').order_by('-created_at')[:50]
-    latest_quotes = Quote.objects.filter(is_approved=True).select_related('posted_by').prefetch_related('tags').order_by('-created_at')[:50]
-    latest_prayers = Prayer.objects.filter(is_approved=True).select_related('posted_by').prefetch_related('tags').order_by('-created_at')[:50]
+    latest_posts = Post.objects.filter(is_approved=True).select_related('posted_by').prefetch_related('tags').prefetch_related('loved_by').prefetch_related('bookmarked_by').order_by('-created_at').all()
+    latest_quotes = Quote.objects.filter(is_approved=True).select_related('posted_by').prefetch_related('tags').prefetch_related('loved_by').prefetch_related('bookmarked_by').order_by('-created_at').all()
+    latest_prayers = Prayer.objects.filter(is_approved=True).select_related('posted_by').prefetch_related('tags').prefetch_related('loved_by').prefetch_related('bookmarked_by').order_by('-created_at').all()
 
     content = list(chain(latest_posts, latest_quotes, latest_prayers))
 
@@ -18,9 +18,9 @@ def home_query():
     return content_sorted
 
 def bookmark_query_for_user(user):
-    bookmarked_posts = Post.objects.filter(bookmarked_by=user).select_related('posted_by').prefetch_related('tags')
-    bookmarked_quotes = Quote.objects.filter(bookmarked_by=user).select_related('posted_by').prefetch_related('tags')
-    bookmarked_prayers = Prayer.objects.filter(bookmarked_by=user).select_related('posted_by').prefetch_related('tags')
+    bookmarked_posts = Post.objects.filter(bookmarked_by=user).select_related('posted_by').prefetch_related('tags').prefetch_related('loved_by').prefetch_related('bookmarked_by').all()
+    bookmarked_quotes = Quote.objects.filter(bookmarked_by=user).select_related('posted_by').prefetch_related('tags').prefetch_related('loved_by').prefetch_related('bookmarked_by').all()
+    bookmarked_prayers = Prayer.objects.filter(bookmarked_by=user).select_related('posted_by').prefetch_related('tags').prefetch_related('loved_by').prefetch_related('bookmarked_by').all()
     
     bookmarked_content = list(chain(bookmarked_posts, bookmarked_quotes, bookmarked_prayers))
     
