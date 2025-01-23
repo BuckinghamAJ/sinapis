@@ -34,7 +34,7 @@
             <li><a 
               hx-get="{% url 'profile_logout' %}"
               hx-push-url="false"
-              hx-target="#main_content"
+              hx-target="#base-content"
               hx-trigger="click"
               hx-swap="outerHTML"
               >Logout</a></li>
@@ -46,7 +46,7 @@
             hx-push-url="false"
             hx-target="#login_modal"
             hx-trigger="click"
-            hx-swap="innerHTML"
+            hx-swap="outerHTML"
             >Login</a>
       {% endif %}
     </div>

@@ -28,7 +28,7 @@ def request_login(request):
             form.clean()
             form.login(request, redirect_url=reverse_lazy('home'))
             response = home(request)
-            return retarget(response, '#main_content')
+            return retarget(response, '#base-content')
         else:
             context = {'errors': form.errors}
             return render(request, 'profiles/login.html', context)
