@@ -1,0 +1,66 @@
+{% load partials %}
+
+{% partialdef profile-form %}
+
+    <div class="py-2">
+        <label class="input input-bordered flex items-center gap-2 max-w-lg">
+            Username:
+            <input type="text" value="{{user.username}}" class="grow input focus:border-0" />
+        </label>
+    </div>
+    <div class="py-2">
+        <label class="input input-bordered flex items-center gap-2 max-w-lg ">
+            Email:
+            <input type="text" value="{{user.email}}" class="grow input focus:border-0" />        
+        </label>
+    </div>
+
+    <div class="py-2">
+        <textarea
+            {%if user.profile.bio %}value="{{user.profile.bio}}"{% endif %}
+            placeholder="Bio"
+            class="textarea textarea-bordered textarea-md w-full max-w-lg"></textarea>
+    </div>
+
+    <div class="py-2">
+        <input
+            type="file"
+            name="profile_pic"
+            class="file-input file-input-bordered file-input-primary w-full max-w-xs" />
+    </div>
+
+    <div class="text-justify">
+        <button id="submit_profile_info" class="btn btn-outline btn-primary" 
+                hx-post="{% url 'update_profile' %}"
+                hx-push-url="false"
+                hx-target="#quote_prayer_form"
+                hx-swap="innerHTML"
+                >           
+            Submit
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 7.5h-.75A2.25 2.25 0 0 0 4.5 9.75v7.5a2.25 2.25 0 0 0 2.25 2.25h7.5a2.25 2.25 0 0 0 2.25-2.25v-7.5a2.25 2.25 0 0 0-2.25-2.25h-.75m0-3-3-3m0 0-3 3m3-3v11.25m6-2.25h.75a2.25 2.25 0 0 1 2.25 2.25v7.5a2.25 2.25 0 0 1-2.25 2.25h-7.5a2.25 2.25 0 0 1-2.25-2.25v-.75" />
+                </svg>     
+        </button>
+    </div>
+
+{% endpartialdef profile-form %}
+
+<div class="w-[50lvw]">
+
+    <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
+        <div class="w-10 rounded-full">
+          <img
+            alt="Tailwind CSS Navbar component"
+            src="{{ user.profile.profile_pic.url }}" />
+        </div>
+    </div>
+
+    <div class="">
+        <form id="profile_form">
+            {% csrf_token %}
+            
+            {% partial profile-form %}
+        </form>
+    </div>
+    
+</div>

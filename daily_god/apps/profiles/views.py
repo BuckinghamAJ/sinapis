@@ -42,3 +42,12 @@ def profile_logout(request):
     logout(request)
 
     return home(request)
+
+def get_profile(request):
+    return render(request, 'profiles/profile.html')
+
+def update_profile(request):
+    if request.htmx and request.method == 'POST':
+        ...
+
+    return render(request, 'profiles/profile.html#profile-form ')    

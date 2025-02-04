@@ -18,7 +18,7 @@ COPY . /app/
 
 RUN <<EOF
 set -e
-export DJANGO_SETTINGS_MODULE=sample_deployment.settings
+export DJANGO_SETTINGS_MODULE=daily_god.settings
 export DATABASE_URL=postgres://postgres:5432/postgres
 export DJANGO_SECRET_KEY=secret
 

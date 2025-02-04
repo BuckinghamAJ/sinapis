@@ -26,6 +26,8 @@ urlpatterns = [
     path('profile/signup/', profiles_views.request_signup, name='profile_signup'),
     path('profile/login/', profiles_views.request_login, name='profile_login'),
     path('profile/account_reset/', profiles_views.request_account_reset, name='request_account_reset'),
+    path('profile/', profiles_views.get_profile, name='get_profile'),
+    path('profile/update/', profiles_views.update_profile, name='update_profile'),
 
     ### Posts ###
     path('post/<int:id>/', posts_views.get_post, name='get_post'),
