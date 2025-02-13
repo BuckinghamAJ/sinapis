@@ -5,36 +5,100 @@
     <div class="py-2">
         <label class="input input-bordered flex items-center gap-2 max-w-lg">
             Username:
-            <input type="text" value="{{user.username}}" class="grow input focus:border-0" />
+            <input type="text" name="username" value="{{user.username}}" class="grow input focus:border-0" readonly="readonly"/>
         </label>
+        {% if errors.username %}
+            <div class="mt-1 alert alert-error max-w-lg">
+                {% for error in errors.username %}
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="h-6 w-6 shrink-0 stroke-current"
+                        fill="none"
+                        viewBox="0 0 24 24">
+                        <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <p>{{ error }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
     </div>
     <div class="py-2">
         <label class="input input-bordered flex items-center gap-2 max-w-lg ">
             Email:
-            <input type="text" value="{{user.email}}" class="grow input focus:border-0" />        
+            <input type="text" name="email" value="{{user.email}}" class="grow input focus:border-0" readonly="readonly"/>        
         </label>
+        {% if errors.email %}
+            <div class="mt-1 alert alert-error max-w-lg">
+                {% for error in errors.email %}
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-6 w-6 shrink-0 stroke-current"
+                    fill="none"
+                    viewBox="0 0 24 24">
+                    <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                    <p>{{ error }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
     </div>
 
     <div class="py-2">
         <textarea
-            {%if user.profile.bio %}value="{{user.profile.bio}}"{% endif %}
             placeholder="Bio"
-            class="textarea textarea-bordered textarea-md w-full max-w-lg"></textarea>
+            name="bio"
+            class="textarea textarea-bordered textarea-md w-full max-w-lg">{% if user.profile.bio %}{{user.profile.bio}}{% endif %}</textarea>
+        {% if errors.bio %}
+            <div class="mt-1 alert alert-error w-full max-w-lg"">
+                {% for error in errors.bio %}
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-6 w-6 shrink-0 stroke-current"
+                    fill="none"
+                    viewBox="0 0 24 24">
+                    <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                    <p>{{ error }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
     </div>
 
     <div class="py-2">
+        Update Profile Picture:
         <input
             type="file"
             name="profile_pic"
+            accept="image/*"
             class="file-input file-input-bordered file-input-primary w-full max-w-xs" />
+        {% if errors.profile_pic %}
+            <div class="alert alert-error w-full max-w-xs">
+                {% for error in errors.profile_pic %}
+                    <p>{{ error }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
     </div>
 
     <div class="text-justify">
         <button id="submit_profile_info" class="btn btn-outline btn-primary" 
                 hx-post="{% url 'update_profile' %}"
                 hx-push-url="false"
-                hx-target="#quote_prayer_form"
-                hx-swap="innerHTML"
+                hx-target="#profile_page"
+                hx-swap="outerHTML"
+                hx-encoding="multipart/form-data"
                 >           
             Submit
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
@@ -45,7 +109,7 @@
 
 {% endpartialdef profile-form %}
 
-<div class="w-[50lvw]">
+<div id="profile_page" class="w-[50lvw]">
 
     <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
         <div class="w-10 rounded-full">
@@ -56,7 +120,7 @@
     </div>
 
     <div class="">
-        <form id="profile_form">
+        <form id="profile_form" enctype="multipart/form-data">
             {% csrf_token %}
             
             {% partial profile-form %}

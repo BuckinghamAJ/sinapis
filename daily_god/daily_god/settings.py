@@ -333,7 +333,7 @@ EMBED_VIDEO_BACKENDS = (
 
 
 # Seedling App Settings
-TRUST_LEVEL_THRESHOLD = 10
+TRUST_LEVEL_THRESHOLD = os.getenv("TRUST_LEVEL_THRESHOLD", 10)
 
 
 # TODO: Add Following Packages for Prod:

@@ -28,6 +28,8 @@ urlpatterns = [
     path('profile/account_reset/', profiles_views.request_account_reset, name='request_account_reset'),
     path('profile/', profiles_views.get_profile, name='get_profile'),
     path('profile/update/', profiles_views.update_profile, name='update_profile'),
+    path('profile/pic/', profiles_views.get_profile_pic, name='get_profile_pic'),
+
 
     ### Posts ###
     path('post/<int:id>/', posts_views.get_post, name='get_post'),

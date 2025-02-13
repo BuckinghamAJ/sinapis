@@ -34,6 +34,19 @@
                 }
             });
 
+            document.addEventListener('profile-pic-updated', (event) => {
+                htmx.ajax('GET', 'profile/pic', {
+                        target: '#topbar_profile_pic', // Optional: specify where to swap the response
+                        swap: 'outerHTML', // Optional: specify the swap strategy
+                        success: (response) => {
+                            // Optional: handle the successful response
+                        },
+                        error: (err) => {
+                            // Optional: handle errors
+                        }
+                        });
+            });
+
             document.addEventListener('alpine:init', () => {
                 Alpine.store('seedling', {
                     referred_page: '/'

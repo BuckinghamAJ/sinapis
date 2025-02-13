@@ -2,9 +2,18 @@ from django.shortcuts import render
 from django.contrib.auth import logout, login
 from allauth.account.forms import LoginForm, SignupForm
 from django.urls import reverse, reverse_lazy
-from django_htmx.http import HttpResponseClientRedirect, HttpResponseClientRefresh, retarget
+from django_htmx.http import HttpResponseClientRedirect, HttpResponseClientRefresh, retarget, trigger_client_event
 from frontend.views import home
 from allauth.account.auth_backends import AuthenticationBackend
+from .functions import get_user_from_username
+from django.template import Template, Context
+from django.http import HttpResponse
+from .forms import ProfileForm, UserForm
+
+import logging
+
+log = logging.getLogger('app')
+
 # Create your views here.
 def request_signup(request):
     if request.htmx and request.method == 'POST':
@@ -46,8 +55,45 @@ def profile_logout(request):
 def get_profile(request):
     return render(request, 'profiles/profile.html')
 
-def update_profile(request):
-    if request.htmx and request.method == 'POST':
-        ...
+def get_profile_pic(request):
+    img_temp = Template("""<img id="topbar_profile_pic"
+                alt="Profile picture of user"
+                src="{{ user.profile.profile_pic.url }}" />""")
+    
+    img_context = Context({'user': request.user})
 
-    return render(request, 'profiles/profile.html#profile-form ')    
+    return HttpResponse(img_temp.render(img_context))
+
+
+def update_profile(request):
+    profile_form = ProfileForm()
+
+    if request.htmx and request.method == 'POST':
+
+        username = request.user.username
+        user = get_user_from_username(username)
+        log.debug(f"Files sent: {request.FILES}")
+        
+        profile_form = ProfileForm(request.POST, request.FILES, instance=user.profile)
+        user_form = UserForm(request.POST, instance=user)
+
+        if profile_form.is_valid() and user_form.is_valid():
+            profile_form.save()
+            user_form.save()
+            
+            response = render(request, 'profiles/profile.html')
+
+            if request.FILES:
+               response = trigger_client_event(
+                                response,
+                                'profile-pic-updated'
+                        )
+
+            return response
+        else:
+            errors = profile_form.errors.copy()
+            errors.update(user_form.errors)
+            context = {'errors': errors}
+            return render(request, 'profiles/profile.html', context)
+
+    return render(request, 'profiles/profile.html#profile-form', context={'profile_form': profile_form})    
