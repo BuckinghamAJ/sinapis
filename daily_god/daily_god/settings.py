@@ -25,7 +25,7 @@ APP_DIR = Path(PROJECT_ROOT, 'apps')
 
 env = environ.Env(
     # set casting, default value
-    DEBUG=(bool, False)
+    DEBUG=(bool, True if os.getenv("DEBUG") == "on" else False),
 )
 
 SITE_ID = 1
@@ -37,18 +37,22 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 sys.path.insert(0, os.path.join(BASE_DIR, 'apps'))
 
 # Take environment variables from .env file
-environ.Env.read_env(Path(BASE_DIR, '.env'))
+if os.getenv("Production") == "True":
+    environ.Env.read_env(Path(BASE_DIR, '.env.prod'))
+else:
+    environ.Env.read_env(Path(BASE_DIR, '.env'))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = env('SECRET_KEY')
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env('DEBUG')
+DEBUG = True if os.getenv("DEBUG") == "on" else False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS","127.0.0.1").split(",")
+CSRF_TRUSTED_ORIGINS = os.getenv("DJANGO_CSRF_TRUSTED_ORIGINS","https://127.0.0.1").split(",")
 
 
 
@@ -147,49 +151,27 @@ WSGI_APPLICATION = 'daily_god.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-def check_local_db():
-    """Check if the local database is accessible."""
-    try:
-        db_connection = connections['default']
-        db_connection.cursor()
-        return True
-    except OperationalError:
-        return False
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': env('LOCAL_DB_NAME'),
-        'USER': env('LOCAL_DB_USER'),
-        'PASSWORD': env('LOCAL_DB_PASSWORD'),
-        'HOST': 'localhost',
-        'PORT': '5432',
-        "OPTIONS": {
-            "pool": True,
-        },
-    },
-    'production': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': env('PRODUCTION_DB_NAME'),
-        'USER': env('PRODUCTION_DB_USER'),
-        'PASSWORD': env('PRODUCTION_DB_PASSWORD'),
-        'HOST': env('PRODUCTION_DB_HOST'),
-        'PORT': env('PRODUCTION_DB_PORT'),
+        'NAME': env('POSTGRES_DB'),
+        'USER': env('POSTGRES_USER'),
+        'PASSWORD': env('POSTGRES_PASSWORD'),
+        'HOST': env('POSTGRES_HOST'),
+        'PORT': env('POSTGRES_PORT'),
         "OPTIONS": {
             "pool": True,
         },
     }
 }
 
-if not check_local_db():    
-    # If the local database is not accessible, use the production database
-    DATABASES['default'] = DATABASES['production']
 
+cache_port = env("CACHE_PORT", default=11211)
 
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.memcached.PyMemcacheCache',
-        'LOCATION': '127.0.0.1:11211',
+        'LOCATION': f'127.0.0.1:{cache_port}',
     }
 }
 
@@ -252,7 +234,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = 'static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
