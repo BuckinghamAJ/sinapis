@@ -16,8 +16,13 @@ RUN pip install --upgrade pip
 COPY requirements.txt /app/ 
 RUN pip install --no-cache-dir -r requirements.txt
 
+  
 # syntax=docker/dockerfile:1.3-labs
 FROM python:3.13-slim
+
+RUN apt-get update
+RUN apt-get install -y nodejs
+RUN apt-get install -y npm
 
 RUN useradd -m -r appuser && \
    mkdir /app && \
@@ -26,7 +31,6 @@ RUN useradd -m -r appuser && \
 # Copy the Python dependencies from the builder stage
 COPY --from=builder /usr/local/lib/python3.13/site-packages/ /usr/local/lib/python3.13/site-packages/
 COPY --from=builder /usr/local/bin/ /usr/local/bin/
- 
 # Set the working directory
 WORKDIR /app
  
@@ -45,6 +49,11 @@ EXPOSE 8000
 
 # Make entry file executable
 RUN chmod +x  /app/entrypoint.prod.sh
- 
+
+
+RUN python manage.py tailwind install --no-input;
+RUN python manage.py tailwind build --no-input;
+RUN python manage.py collectstatic --no-input;
+
 # Start the application using Gunicorn
 CMD ["/app/entrypoint.prod.sh"]

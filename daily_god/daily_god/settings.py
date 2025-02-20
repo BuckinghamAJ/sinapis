@@ -20,13 +20,12 @@ import sys
 import os 
 import logging
 
+from dotenv import load_dotenv
+
+load_dotenv()  # take environment variables from .env.
+
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 APP_DIR = Path(PROJECT_ROOT, 'apps')
-
-env = environ.Env(
-    # set casting, default value
-    DEBUG=(bool, True if os.getenv("DEBUG") == "on" else False),
-)
 
 SITE_ID = 1
 
@@ -36,11 +35,7 @@ SITE_ID = 1
 BASE_DIR = Path(__file__).resolve().parent.parent
 sys.path.insert(0, os.path.join(BASE_DIR, 'apps'))
 
-# Take environment variables from .env file
-if os.getenv("Production") == "True":
-    environ.Env.read_env(Path(BASE_DIR, '.env.prod'))
-else:
-    environ.Env.read_env(Path(BASE_DIR, '.env'))
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
@@ -154,11 +149,11 @@ WSGI_APPLICATION = 'daily_god.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': env('POSTGRES_DB'),
-        'USER': env('POSTGRES_USER'),
-        'PASSWORD': env('POSTGRES_PASSWORD'),
-        'HOST': env('POSTGRES_HOST'),
-        'PORT': env('POSTGRES_PORT'),
+        'NAME': os.getenv('POSTGRES_DB'),
+        'USER': os.getenv('POSTGRES_USER'),
+        'PASSWORD': os.getenv('POSTGRES_PASSWORD'),
+        'HOST': os.getenv('POSTGRES_HOST'),
+        'PORT': os.getenv('POSTGRES_PORT'),
         "OPTIONS": {
             "pool": True,
         },
@@ -166,7 +161,7 @@ DATABASES = {
 }
 
 
-cache_port = env("CACHE_PORT", default=11211)
+cache_port = os.getenv("CACHE_PORT", default=11211)
 
 CACHES = {
     'default': {
@@ -317,6 +312,7 @@ EMBED_VIDEO_BACKENDS = (
 # Seedling App Settings
 TRUST_LEVEL_THRESHOLD = os.getenv("TRUST_LEVEL_THRESHOLD", 10)
 
+#NPM_BIN_PATH = "/usr/local/bin/npm"
 
 # TODO: Add Following Packages for Prod:
 # django-comments-xtd
