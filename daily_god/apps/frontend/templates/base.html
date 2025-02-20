@@ -33,7 +33,17 @@
                 if (event.detail.target.id === 'my_post_content') {
                 document.getElementById('my_post_content').showModal();
                 }
+
             });
+
+            window.onloadTurnstileCallback = function () {
+                turnstile.render("#cf-turnstile", {
+                    sitekey: "1x00000000000000000000AA",
+                    callback: function (token) {
+                    console.log(`Challenge Success ${token}`);
+                    },
+                });
+                };
 
             document.addEventListener('profile-pic-updated', (event) => {
                 htmx.ajax('GET', 'profile/pic', {
@@ -53,6 +63,8 @@
                     referred_page: '/'
                 })
             })
+            
+
         </script>
     </body>
 </html>

@@ -1,4 +1,4 @@
-<div id="login" class="w-11/12 mx-auto mt-5 rounded-lg shadow-md bg-base-100">
+<div id="login_modal" class="w-11/12 mx-auto mt-5 rounded-lg shadow-md bg-base-100">
     <h1 class="mb-3 text-2xl">Sign In</h1>
     
     {% if errors %}
@@ -27,7 +27,7 @@
         <a class="link" 
             hx-get="{% url 'profile_signup' %}"
             hx-push-url="false"
-            hx-target="#login"
+            hx-target="#login_modal"
             hx-swap="outerHTML"
                 >sign up</a> first.
     </div>
@@ -71,13 +71,13 @@
             <a class="link self-end text-sm" 
                hx-get="{% url 'request_account_reset' %}"
                hx-push-url="false"
-               hx-target="#login"
+               hx-target="#login_modal"
                hx-swap="outerHTML">Forgot password?</a>
         </div>
         
         <button class="my-3 btn btn-primary" 
         hx-post="{% url 'profile_login' %}" 
-        hx-target="#login" 
+        hx-target="#login_modal" 
         hx-swap="outerHTML">Sign In</button>
     </form>
 </div>

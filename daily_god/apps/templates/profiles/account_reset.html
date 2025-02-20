@@ -1,4 +1,4 @@
-<div id="reset" class="w-11/12 mx-auto mt-5 rounded-lg shadow-md bg-base-100">
+<div id='login_modal' class="w-11/12 mx-auto mt-5 rounded-lg shadow-md bg-base-100">
     <h1 class="mb-3 text-2xl">Password Reset</h1>
     
     <div>
@@ -23,12 +23,12 @@
         <a 
            hx-get="{% url 'profile_login' %}"
            hx-push-url="false"
-           hx-target="#reset"
+           hx-target="#login_modal"
            hx-swap="outerHTML">Sign In</a>
         <a 
            hx-get="{% url 'profile_signup' %}"
            hx-push-url="false"
-           hx-target="#reset"
+           hx-target="#login_modal"
            hx-swap="outerHTML">Sign Up</a>
     </div>
 </div>

@@ -5,30 +5,43 @@ from django.urls import reverse, reverse_lazy
 from django_htmx.http import HttpResponseClientRedirect, HttpResponseClientRefresh, retarget, trigger_client_event
 from frontend.views import home
 from allauth.account.auth_backends import AuthenticationBackend
-from .functions import get_user_from_username
+from .functions import get_user_from_username, verify_turnstile, CloudfareServerException
 from django.template import Template, Context
 from django.http import HttpResponse
 from .forms import ProfileForm, UserForm
 
 import logging
-
+import os 
 log = logging.getLogger('app')
+
+CLOUDFARE_SITEKEY= os.getenv('CLOUDFARE_SITEKEY', "0x4AAAAAAA9VV9NxwQS-MzX9")
 
 # Create your views here.
 def request_signup(request):
+    
     if request.htmx and request.method == 'POST':
+        log.debug(f"{request.POST=}")
+
         form = SignupForm(request.POST)
-        if form.is_valid():
-            form.clean()
-            user, _ = form.try_save(request)
-            login(request, user, backend='allauth.account.auth_backends.AuthenticationBackend')
-            response = home(request)
-            return retarget(response, '#full_body')
-        else:
-            context = {'errors': form.errors}
+        token = request.POST.get("cf-turnstile-response")
+        remoteip = request.META.get('REMOTE_ADDR')
+
+        try:
+            if form.is_valid() and verify_turnstile(token, remoteip):
+                form.clean()
+                user, _ = form.try_save(request)
+                login(request, user, backend='allauth.account.auth_backends.AuthenticationBackend')
+                response = home(request)
+                return retarget(response, '#base-content')
+            else:
+                context = {'errors': form.errors, 'cf_sitekey': CLOUDFARE_SITEKEY}
+                return render(request, 'profiles/signup.html', context)
+
+        except CloudfareServerException as e:
+            context = {'errors': {"cf": str(e) }, 'cf_sitekey': CLOUDFARE_SITEKEY}
             return render(request, 'profiles/signup.html', context)
 
-    return render(request, 'profiles/signup.html')
+    return render(request, 'profiles/signup.html', {'cf_sitekey': CLOUDFARE_SITEKEY})
 
 def request_login(request):
     if request.htmx and request.method == 'POST':
