@@ -15,9 +15,8 @@ from django.db.utils import OperationalError
 from django.db import connections
 from django.utils.log import DEFAULT_LOGGING
 
-import environ
 import sys
-import os 
+import os
 import logging
 
 from dotenv import load_dotenv
