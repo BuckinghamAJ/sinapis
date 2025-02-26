@@ -309,7 +309,7 @@ EMBED_VIDEO_BACKENDS = (
 
 
 # Seedling App Settings
-TRUST_LEVEL_THRESHOLD = os.getenv("TRUST_LEVEL_THRESHOLD", 10)
+TRUST_LEVEL_THRESHOLD = int(os.getenv("TRUST_LEVEL_THRESHOLD", 10))
 
 #NPM_BIN_PATH = "/usr/local/bin/npm"
 

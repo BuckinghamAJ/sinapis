@@ -10,6 +10,8 @@ def home_query():
     latest_quotes = Quote.objects.filter(is_approved=True).select_related('posted_by').prefetch_related('tags').prefetch_related('loved_by').prefetch_related('bookmarked_by').order_by('-created_at').all()
     latest_prayers = Prayer.objects.filter(is_approved=True).select_related('posted_by').prefetch_related('tags').prefetch_related('loved_by').prefetch_related('bookmarked_by').order_by('-created_at').all()
 
+
+
     content = list(chain(latest_posts, latest_quotes, latest_prayers))
 
      # Sort by number of loves first, then by created_at date
@@ -21,12 +23,12 @@ def bookmark_query_for_user(user):
     bookmarked_posts = Post.objects.filter(bookmarked_by=user).select_related('posted_by').prefetch_related('tags').prefetch_related('loved_by').prefetch_related('bookmarked_by').all()
     bookmarked_quotes = Quote.objects.filter(bookmarked_by=user).select_related('posted_by').prefetch_related('tags').prefetch_related('loved_by').prefetch_related('bookmarked_by').all()
     bookmarked_prayers = Prayer.objects.filter(bookmarked_by=user).select_related('posted_by').prefetch_related('tags').prefetch_related('loved_by').prefetch_related('bookmarked_by').all()
-    
+
     bookmarked_content = list(chain(bookmarked_posts, bookmarked_quotes, bookmarked_prayers))
-    
+
     # Sort by number of loves first, then by created_at date
     content_sorted = sorted(bookmarked_content, key=lambda x: (-x.loves, -x.created_at.timestamp()))
-    
+
     return content_sorted
 
 def extract_text_between(text, start, end):
@@ -34,12 +36,12 @@ def extract_text_between(text, start, end):
     match = pattern.search(text)
     if match:
         return match.group(1)
-    return None 
+    return None
 
 def love_content_by(request, type: str, id: int) -> tuple:
     """
-    Determines the type of content and loves it if the user has not loved it before. 
-    
+    Determines the type of content and loves it if the user has not loved it before.
+
     Parameters:
     - request: HttpRequest object
     - type: str - the type of content to love (i.e. 'post', 'quote', 'prayer')
@@ -70,7 +72,7 @@ def love_content_by(request, type: str, id: int) -> tuple:
         content.loved_by.remove(request.user)
         content.loves -= 1
         content.save()
-    
+
     context.update({'user': request.user})
 
 
@@ -79,8 +81,8 @@ def love_content_by(request, type: str, id: int) -> tuple:
 
 def bookmark_content_by(request, type: str, id: int) -> tuple:
     """
-    Determines the type of content and bookmarks it if the user has not bookmarked it before. 
-    
+    Determines the type of content and bookmarks it if the user has not bookmarked it before.
+
     Parameters:
     - request: HttpRequest object
     - type: str - the type of content to bookmark (i.e. 'post', 'quote', 'prayer')

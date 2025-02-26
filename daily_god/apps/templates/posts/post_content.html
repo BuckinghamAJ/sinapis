@@ -1,40 +1,52 @@
 {% load embed_video_tags %}
+{% load static %}
+{% load cache %}
 
-
-<div id='post_card_{{post.id}}' class=" z-0 card card-compact bg-base-100 w-80 h-80 shadow-xl hover:shadow-gold-glow">
-  <a hx-get="post/{{post.id}}"
-     hx-target="#my_post_content"
-     hx-trigger="click"
-     hx-swap="outerHTML"
-     hx-push-url="false">
-    {% if post.image_url %}
-        <img class="object-cover w-full h-48 rounded-t-lg"
-            src="{{ post.image_url }}"
-            alt="{{ post.title }}" />
-    {% else %}
-        <img class="object-cover w-full h-48 rounded-t-lg"
-           src"{% static 'img/default_post.jpg' %}"
-           alt="{{ post.title }}" />
-    {% endif %}
-    {% if post.video %}
-      {% video post.video is_secure=True as post_video %}
-      <img class="object-cover w-full h-48 rounded-t-lg"
-            src="{{ post_video.thumbnail }}"
-            alt="{{ post.title }}" />
-      {% endvideo %}
-    {% endif %}
-    <div class="card-body text-white h-24 overflow-hidden text-clip">
-        <h2 class="card-title text-base md:text-lg">
-            {% if post.title %}
-                {{ post.title }}
+<div
+    id="post_card_{{post.id}}"
+    class="z-0 card card-compact bg-base-100 w-80 h-80 shadow-xl hover:shadow-gold-glow"
+>
+    <a
+        hx-get="post/{{post.id}}"
+        hx-target="#my_post_content"
+        hx-trigger="click"
+        hx-swap="outerHTML"
+        hx-push-url="false"
+    >
+        {% if post.video %}
+            {% video post.video is_secure=True as post_video %}
+            <img
+                class="object-cover w-full h-48 rounded-t-lg"
+                src="{{ post_video.thumbnail }}"
+                alt="{{ post.title }}"
+            />
+            {% endvideo %}
+        {% else %}
+            {% if post.image_url %}
+            <img
+                class="object-cover w-full h-48 rounded-t-lg"
+                src="{{ post.image_url }}"
+                alt="{{ post.title }}"
+            />
+            {% else %}
+                <img
+                    class="object-cover w-full h-48 rounded-t-lg"
+                    src="{% static 'img/default_post.png' %}"
+                    alt="{{ post.title }}"
+                />
             {% endif %}
-        </h2>
+        {% endif %}
+
+        <div class="card-body text-white h-24 overflow-hidden text-clip">
+            <h2 class="card-title text-base md:text-lg">
+                {% if post.title %} {{ post.title }} {% endif %}
+            </h2>
+        </div>
+    </a>
+    <!-- TODO: Make a modal pop up instead for login.-->
+    <div class="z-10 w-full">
+        {% if user.is_authenticated %}
+            {% include 'components/interactable.html' with content=post type='post' id=post.id %}
+        {% endif %}
     </div>
-  </a>
-  <!-- TODO: Make a modal pop up instead for login.-->
-  <div class="z-10 w-full">
-    {% if user.is_authenticated %}
-      {% include 'components/interactable.html' with content=post type='post' id=post.id %}
-    {% endif %}
-  </div>
 </div>
