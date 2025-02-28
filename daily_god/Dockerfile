@@ -20,6 +20,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 # syntax=docker/dockerfile:1.3-labs
 FROM python:3.13-slim
 
+RUN apt-get update
 RUN apt-get install -y nodejs
 RUN apt-get install -y npm
 
