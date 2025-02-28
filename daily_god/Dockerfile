@@ -16,12 +16,12 @@ RUN pip install --upgrade pip
 COPY requirements.txt /app/
 RUN pip install --no-cache-dir -r requirements.txt
 
-RUN apt-get update
-RUN apt-get install -y nodejs
-RUN apt-get install -y npm
 
 # syntax=docker/dockerfile:1.3-labs
 FROM python:3.13-slim
+
+RUN apt-get install -y nodejs
+RUN apt-get install -y npm
 
 RUN useradd -m -r appuser && \
     mkdir /app && \
@@ -29,9 +29,6 @@ RUN useradd -m -r appuser && \
 
 # Copy the Python dependencies from the builder stage
 COPY --from=builder /usr/local/lib/python3.13/site-packages/ /usr/local/lib/python3.13/site-packages/
-COPY --from=builder /usr/local/bin/npm /usr/local/bin/npm
-COPY --from=builder /usr/local/bin/node /usr/local/bin/node
-
 COPY --from=builder /usr/local/bin/ /usr/local/bin/
 # Set the working directory
 WORKDIR /app
