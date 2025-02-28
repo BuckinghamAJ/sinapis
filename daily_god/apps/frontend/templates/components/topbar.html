@@ -3,7 +3,7 @@
 <div class="navbar bg-neutral text-neutral-content bg-base-100 border-2 border-gray-500 h-[7dvh]" id="topbar">
     <div class="flex-1 avatar">
       <div class="w-24 rounded">
-        <img 
+        <img
           alt="Sinapis Logo"
           src="{% static 'img/sinapis_logo.png' %}"
         />
@@ -26,7 +26,11 @@
             <div class="w-10 rounded-full">
               <img id="topbar_profile_pic"
                 alt="Profile picture of user"
-                src="{{ user.profile.profile_pic.url }}" />
+                src="{% if user.profile.profile_pic %}
+                        {{ user.profile.profile_pic.url }}
+                     {% else %}
+                        {% static 'img/default_pfp.jpg'%}
+                     {% endif %}" />
             </div>
           </div>
           <ul
@@ -44,7 +48,7 @@
                 <span class="badge">New</span>
               </a>
             </li>
-            <li><a 
+            <li><a
               hx-get="{% url 'profile_logout' %}"
               hx-push-url="false"
               hx-target="#base-content"
@@ -54,7 +58,7 @@
           </ul>
         </div>
       {% else %}
-        <a class="btn" 
+        <a class="btn"
             hx-get="{% url 'profile_login' %}"
             hx-push-url="false"
             hx-target="#login_modal"

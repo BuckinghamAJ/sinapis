@@ -1,19 +1,20 @@
+{% load static %}
 <div id='login_modal' class="w-11/12 mx-auto mt-5 rounded-lg shadow-md bg-base-100">
     <script
     src="https://challenges.cloudflare.com/turnstile/v0/api.js?onload=onloadTurnstileCallback"
     defer
     ></script>
-    
+
     <h1 class="mb-3 text-2xl">Sign Up</h1>
     <div>Already have an account? Then please <a hx-get="{% url 'profile_login' %}"
-                                                 hx-push-url="false" 
-                                                 hx-target="#login_modal" 
+                                                 hx-push-url="false"
+                                                 hx-target="#login_modal"
                                                  hx-swap="outerHTML"
         class="link">sign in</a>.</div>
 
     <form class="py-3">
         {% csrf_token %}
-        
+
         <label class="label" for="id_email">
             <span class="label-text">Email</span>
         </label>
@@ -24,9 +25,9 @@
                     <p>{{ error }}</p>
                 {% endfor %}
             </div>
-        
+
         {% endif %}
-        
+
         <label class="label" for="id_username">
             <span class="label-text">Username</span>
         </label>
@@ -38,12 +39,12 @@
                 {% endfor %}
             </div>
         {% endif %}
-        
+
         <label class="label" for="id_password1">
             <span class="label-text">Password</span>
         </label>
-        <input type="password" name="password1" placeholder="" autocomplete="new-password" 
-                class="w-full input input-bordered text-primary {% if errors.password1 %}input-error{% endif %}" 
+        <input type="password" name="password1" placeholder="" autocomplete="new-password"
+                class="w-full input input-bordered text-primary {% if errors.password1 %}input-error{% endif %}"
                 aria-describedby="id_password1_helptext" id="id_password1" pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\W).{8,}" title="8 or more characters, at least one uppercase letter, one lowercase letter, and one special character"
                 required />
         {% if errors.password1 %}
@@ -53,7 +54,7 @@
                 {% endfor %}
             </div>
         {% endif %}
-        
+
         <label class="label" for="id_password2">
             <span class="label-text">Password (again)</span>
         </label>
@@ -65,18 +66,25 @@
                 {% endfor %}
             </div>
         {% endif %}
-        
+
         <label class="label" for="id_phone_number">
             <span class="label-text"></span>
         </label>
-        
+
         <input type="hidden" name="phone_number" style="position: absolute; right: -99999px;" tabindex="-1" autocomplete="nope" class="w-full input input-bordered text-primary" placeholder="" id="id_phone_number">
-        
+
         <div id='cf-turnstile' class="cf-turnstile" data-theme="dark"></div>
 
-        <button class="my-3 btn btn-primary" hx-post="{% url 'profile_signup' %}" hx-target="#login_modal" hx-swap="outerHTML">Sign Up</button>
-    
+        <button class="my-3 btn btn-primary"
+            hx-post="{% url 'profile_signup' %}"
+            hx-target="#login_modal"
+            hx-swap="outerHTML"
+            hx-indicator="#signup_indicator"
+        >Sign Up
+            <img id="signup_indicator" class="signup-indicator" src="{% static 'img/svg/bars.svg' %}"/>
+        </button>
+
     </form>
 
-    
+
 </div>

@@ -3,14 +3,14 @@ from posts.forms import PostForm
 from quotes.models import Quote
 from prayers.models import Prayer
 from itertools import chain
+from django.db.models import Model
+from typing import Optional, Union
 import re
 
 def home_query():
     latest_posts = Post.objects.filter(is_approved=True).select_related('posted_by').prefetch_related('tags').prefetch_related('loved_by').prefetch_related('bookmarked_by').order_by('-created_at').all()
     latest_quotes = Quote.objects.filter(is_approved=True).select_related('posted_by').prefetch_related('tags').prefetch_related('loved_by').prefetch_related('bookmarked_by').order_by('-created_at').all()
     latest_prayers = Prayer.objects.filter(is_approved=True).select_related('posted_by').prefetch_related('tags').prefetch_related('loved_by').prefetch_related('bookmarked_by').order_by('-created_at').all()
-
-
 
     content = list(chain(latest_posts, latest_quotes, latest_prayers))
 
@@ -48,6 +48,10 @@ def love_content_by(request, type: str, id: int) -> tuple:
     - id: int - the id of the content to love
     """
 
+    content: Optional[Union[Post,Quote,Prayer]] = None
+    template: Optional[str] = None
+    context: dict = {}
+
     try:
         if type == 'post':
             content = Post.objects.get(id=id)
@@ -64,17 +68,19 @@ def love_content_by(request, type: str, id: int) -> tuple:
     except Post.DoesNotExist or Quote.DoesNotExist or Prayer.DoesNotExist:
         content = None
 
+    context.update({'user': request.user})
+
+    if not content:
+        return context, template
+
     if content and request.user not in content.loved_by.all():
         content.loved_by.add(request.user)
         content.loves += 1
-        content.save()
+        content.save(is_being_loved=True)
     else:
         content.loved_by.remove(request.user)
         content.loves -= 1
-        content.save()
-
-    context.update({'user': request.user})
-
+        content.save(is_being_loved=True)
 
     return context, template
 
@@ -88,6 +94,10 @@ def bookmark_content_by(request, type: str, id: int) -> tuple:
     - type: str - the type of content to bookmark (i.e. 'post', 'quote', 'prayer')
     - id: int - the id of the content to bookmark
     """
+
+    content: Optional[Union[Post,Quote,Prayer]] = None
+    template: Optional[str] = None
+    context: dict = {}
 
     try:
         if type == 'post':
@@ -107,8 +117,10 @@ def bookmark_content_by(request, type: str, id: int) -> tuple:
 
     if content and request.user not in content.bookmarked_by.all():
         content.bookmarked_by.add(request.user)
+        content.save(is_being_bookmarked=True)
     else:
         content.bookmarked_by.remove(request.user)
+        content.save(is_being_bookmarked=True)
 
     context.update({'user': request.user})
 

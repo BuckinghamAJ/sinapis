@@ -32,11 +32,9 @@ def verify_turnstile(token: str, ip:str) -> bool:
         'remoteip': ip
     }
 
-    log.info(f"{data=}")
 
     response = requests.post(url, data=data)
     result = response.json()
 
-    log.info(f"response: {result}")
 
     return result.get('success', False)

@@ -1,6 +1,7 @@
+{% load static %}
 <div id="login_modal" class="w-11/12 mx-auto mt-5 rounded-lg shadow-md bg-base-100">
     <h1 class="mb-3 text-2xl">Sign In</h1>
-    
+
     {% if errors %}
         {% for field, error_list in errors.items %}
             {% for error in error_list %}
@@ -24,7 +25,7 @@
 
     <div class="py-3">
         If you have not created an account yet, then please
-        <a class="link" 
+        <a class="link"
             hx-get="{% url 'profile_signup' %}"
             hx-push-url="false"
             hx-target="#login_modal"
@@ -35,7 +36,7 @@
     <form class="py-3">
 
         {% csrf_token %}
-        
+
         <label class="label" for="id_login">
             <span class="label-text">Login</span>
         </label>
@@ -47,7 +48,7 @@
                 {% endfor %}
             </div>
         {% endif %}
-        
+
         <label class="label" for="id_password">
             <span class="label-text">Password</span>
         </label>
@@ -66,19 +67,23 @@
                 <span class="ml-2 label-text">Remember me</span>
             </label>
         </div>
-        
+
         <div class="flex flex-col">
-            <a class="link self-end text-sm" 
+            <a class="link self-end text-sm"
                hx-get="{% url 'request_account_reset' %}"
                hx-push-url="false"
                hx-target="#login_modal"
                hx-swap="outerHTML">Forgot password?</a>
         </div>
-        
-        <button class="my-3 btn btn-primary" 
-        hx-post="{% url 'profile_login' %}" 
-        hx-target="#login_modal" 
-        hx-swap="outerHTML">Sign In</button>
+
+        <button class="my-3 btn btn-primary"
+        hx-post="{% url 'profile_login' %}"
+        hx-target="#login_modal"
+        hx-swap="outerHTML"
+        hx-indicator="#sign_in_loading"
+        >Sign In
+            <img id="sign_in_loading" class="signin-indicator" src="{% static 'img/svg/bars.svg' %}"/>
+        </button>
     </form>
 </div>
 

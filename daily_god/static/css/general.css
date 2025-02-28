@@ -6,3 +6,25 @@
 #id_honeypot {
     display: none;
 }
+
+.signin-indicator {
+    display: none;
+}
+
+.htmx-request .signin-indicator {
+    display: inline;
+}
+.htmx-request.signin-indicator {
+    display: inline;
+}
+
+.signup-indicator {
+    display: none;
+}
+
+.htmx-request .signup-indicator {
+    display: inline;
+}
+.htmx-request.signup-indicator {
+    display: inline;
+}

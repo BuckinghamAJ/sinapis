@@ -10,9 +10,11 @@
         <link rel="stylesheet" type="text/css" href="{% static 'allauth_ui/output.css' %}">
         <link rel="shortcut icon" type="image/png" href="{% static 'img/sinapis_favicon.png' %}"/>
 
+
         <script src="{% static 'js/htmx.min.js' %}"></script>
         <script src="{% static 'js/seedling.js' %}"></script>
         <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+        <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
         {% tailwind_css %}
     </head>
@@ -22,7 +24,7 @@
                             if (event.currentTarget === event.target) {
                                 this.close_new_post_modal();
                             }
-                        },  
+                        },
                     }">
             {% block content %}
             {% endblock %}
@@ -63,7 +65,7 @@
                     referred_page: '/'
                 })
             })
-            
+
 
         </script>
     </body>
