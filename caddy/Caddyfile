@@ -21,13 +21,13 @@
 
     # Serve static files
     handle_path /static/* {
-        root * /www/html/staticfiles/
+        root * /www/html/staticfiles
         file_server
     }
 
     # Serve media files
     handle_path /media/* {
-        root * /www/html/mediafiles/
+        root * /www/html/mediafiles
         file_server
     }
 
