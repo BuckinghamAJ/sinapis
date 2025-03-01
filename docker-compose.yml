@@ -15,8 +15,8 @@ services:
     depends_on:
       - memcached
     volumes:
-      - static_volume:/home/app/staticfiles/
-      - media_volume:/home/app/media/
+      - static_volume:/app/staticfiles/
+      - media_volume:/app/mediafiles/
     env_file: ./daily_god/.env.prod
     networks:
       - sinapis-app
