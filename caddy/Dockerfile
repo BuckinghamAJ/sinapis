@@ -1,8 +1,7 @@
 # Only used in production
 FROM caddy:2-builder AS builder
 
-RUN xcaddy build \
-    --with github.com/mholt/caddy-ratelimit
+RUN xcaddy build
 
 FROM caddy:2-alpine
 COPY Caddyfile /etc/caddy/Caddyfile
