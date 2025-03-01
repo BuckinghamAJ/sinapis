@@ -32,8 +32,8 @@ services:
     environment:
       DOMAIN_NAME: sinapis.xyz
     volumes:
-      - static_volume:/www/html/staticfiles
-      - media_volume:/www/html/mediafiles
+      - static_volume:/www/html/staticfiles/
+      - media_volume:/www/html/mediafiles/
     depends_on:
       - sinapis
     networks:
