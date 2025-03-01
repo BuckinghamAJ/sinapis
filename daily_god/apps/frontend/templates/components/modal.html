@@ -1,5 +1,6 @@
 {% load partials %}
 {% load _extras %}
+{% load static %}
 
 {% partialdef heart-button %}
 {% auth_button %}
@@ -29,7 +30,7 @@
 {% partialdef bookmark-button %}
 {% auth_button %}
   <button id='modal_bookmark_button' class="btn btn-outline join-item"
-    auth_start 
+    auth_start
     hx-post="bookmark/{{type}}/{{content.id}}/" hx-trigger="click"
     hx-vals='{"component": "modal_bookmark_button"}'
     hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
@@ -51,9 +52,9 @@
 
 
 <dialog x-ref="post_content_dialog" id="my_post_content" class="modal" @click="close_post_content_from_event(event)">
-  <div x-data="{ getReferredPage() { return $store.seedling.referred_page; } }" 
+  <div x-data="{ getReferredPage() { return $store.seedling.referred_page; } }"
       class="modal-box w-11/12 max-w-4xl text-white">
-    
+
     {% if type == 'post'%}
       {% include 'posts/modal.html' with post=content %}
     {% elif type == 'prayer' or type == 'quote'%}
@@ -67,27 +68,31 @@
     {% else %}
       <!-- Not expected -->
     {% endif %}
-    
+
     <div class="card-actions justify-end">
         <div class="badge self-center">{{content.posted_by.username}}</div>
         <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
           <div class="w-10 rounded-full">
             <img
               alt="Posted By Image"
-              src="{{ content.posted_by.profile.profile_pic.url }}" />
+              src=" {% if content.posted_by.profile.profile_pic %}
+                        {{ content.posted_by.profile.profile_pic.url }}
+                    {% else %}
+                        {% static 'img/default_pfp.jpg'%}
+                    {% endif %}" />
           </div>
         </div>
     </div>
 
 
 
-    
+
     <div class="join">
       {% partial heart-button %}
 
       {% partial bookmark-button %}
     </div>
-    
+
 
     {% include 'comments/comments.html' with form=comment_form %}
 

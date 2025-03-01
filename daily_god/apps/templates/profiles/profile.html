@@ -1,5 +1,5 @@
 {% load partials %}
-
+{% load static %}
 {% partialdef profile-form %}
 
     <div class="py-2">
@@ -29,7 +29,7 @@
     <div class="py-2">
         <label class="input input-bordered flex items-center gap-2 max-w-lg ">
             Email:
-            <input type="text" name="email" value="{{user.email}}" class="grow input focus:border-0" readonly="readonly"/>        
+            <input type="text" name="email" value="{{user.email}}" class="grow input focus:border-0" readonly="readonly"/>
         </label>
         {% if errors.email %}
             <div class="mt-1 alert alert-error max-w-lg">
@@ -93,17 +93,17 @@
     </div>
 
     <div class="text-justify">
-        <button id="submit_profile_info" class="btn btn-outline btn-primary" 
+        <button id="submit_profile_info" class="btn btn-outline btn-primary"
                 hx-post="{% url 'update_profile' %}"
                 hx-push-url="false"
                 hx-target="#profile_page"
                 hx-swap="outerHTML"
                 hx-encoding="multipart/form-data"
-                >           
+                >
             Submit
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 7.5h-.75A2.25 2.25 0 0 0 4.5 9.75v7.5a2.25 2.25 0 0 0 2.25 2.25h7.5a2.25 2.25 0 0 0 2.25-2.25v-7.5a2.25 2.25 0 0 0-2.25-2.25h-.75m0-3-3-3m0 0-3 3m3-3v11.25m6-2.25h.75a2.25 2.25 0 0 1 2.25 2.25v7.5a2.25 2.25 0 0 1-2.25 2.25h-7.5a2.25 2.25 0 0 1-2.25-2.25v-.75" />
-                </svg>     
+                </svg>
         </button>
     </div>
 
@@ -115,16 +115,20 @@
         <div class="w-10 rounded-full">
           <img
             alt="Tailwind CSS Navbar component"
-            src="{{ user.profile.profile_pic.url }}" />
+            src="{% if user.profile.profile_pic %}
+                    {{ user.profile.profile_pic.url }}
+                 {% else %}
+                    {% static 'img/default_pfp.jpg'%}
+                 {% endif %}" />
         </div>
     </div>
 
     <div class="">
         <form id="profile_form" enctype="multipart/form-data">
             {% csrf_token %}
-            
+
             {% partial profile-form %}
         </form>
     </div>
-    
+
 </div>
