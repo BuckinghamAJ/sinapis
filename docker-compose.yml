@@ -4,7 +4,7 @@ services:
     ports:
       - "11211:11211"
     networks:
-      - default
+      - sinapis-app
 
   sinapis:
     build:
@@ -19,7 +19,7 @@ services:
       - media_volume:/home/app/media/
     env_file: ./daily_god/.env.prod
     networks:
-      - default
+      - sinapis-app
       - outside
 
   frontend-proxy:
@@ -34,19 +34,17 @@ services:
     volumes:
       - static_volume:/www/html/staticfiles
       - media_volume:/www/html/mediafiles
-      - caddy_data:/data
-      - caddy_config:/config
     depends_on:
       - sinapis
     networks:
-      - default
+      - sinapis-app
 
 networks:
+  sinapis-app:
+    driver: bridge
   outside:
     external: true
 
 volumes:
   static_volume:
   media_volume:
-  caddy_config:
-  caddy_data:
