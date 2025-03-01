@@ -32,8 +32,8 @@ services:
     environment:
       DOMAIN_NAME: sinapis.xyz
     volumes:
-      - static_volume:/home/app/staticfiles/
-      - media_volume:/home/app/media/
+      - static_volume:/www/html/staticfiles
+      - media_volume:/www/html/mediafiles
       - caddy_data:/data
       - caddy_config:/config
     depends_on:
