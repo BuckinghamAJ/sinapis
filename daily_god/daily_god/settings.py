@@ -161,11 +161,12 @@ DATABASES = {
 
 
 cache_port = os.getenv("CACHE_PORT", default=11211)
+cache_host = os.getenv("CACHE_HOST", default='127.0.0.1')
 
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.memcached.PyMemcacheCache',
-        'LOCATION': f'127.0.0.1:{cache_port}',
+        'LOCATION': f'{cache_host}:{cache_port}',
     }
 }
 
