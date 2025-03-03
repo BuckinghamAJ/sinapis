@@ -44,6 +44,8 @@ ENV PYTHONUNBUFFERED=1
 # Switch to non-root user
 USER appuser
 
+RUN mkdir /app/media/profile_pics
+
 # Expose the application port
 EXPOSE 8000
 

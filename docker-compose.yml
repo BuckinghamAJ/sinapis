@@ -36,6 +36,7 @@ services:
       - static_volume:/www/html/staticfiles/
       - media_volume:/www/html/mediafiles/
       - caddy_data:/data
+      - caddy_config:/config
     depends_on:
       - sinapis
     networks:
@@ -51,3 +52,4 @@ volumes:
   static_volume:
   media_volume:
   caddy_data:
+  caddy_config:
