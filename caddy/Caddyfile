@@ -1,0 +1,38 @@
+{$DOMAIN_NAME:invalid} {
+    encode gzip
+    reverse_proxy sinapis:8000
+
+    header {
+        -X-Powered-By
+        -Server
+
+        # enable HSTS
+        Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+
+        # disable clients from sniffing the media type
+        X-Content-Type-Options nosniff
+
+        # clickjacking protection
+        X-Frame-Options DENY
+
+        # XSS Protection
+        X-XSS-Protection "1; mode=block"
+    }
+
+    # Serve static files
+    handle_path /static/* {
+        root * /www/html/staticfiles
+        file_server
+    }
+
+    # Serve media files
+    handle_path /media/* {
+        root * /www/html/mediafiles
+        file_server
+    }
+
+}
+
+www.{$DOMAIN_NAME:invalid} {
+	redir https://{$DOMAIN_NAME:invalid}{uri} permanent
+}

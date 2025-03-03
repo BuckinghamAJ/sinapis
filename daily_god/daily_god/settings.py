@@ -47,7 +47,7 @@ DEBUG = True if os.getenv("DEBUG") == "on" else False
 
 ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS","127.0.0.1").split(",")
 CSRF_TRUSTED_ORIGINS = os.getenv("DJANGO_CSRF_TRUSTED_ORIGINS","https://127.0.0.1").split(",")
-
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
 
 # Application definition
@@ -161,11 +161,12 @@ DATABASES = {
 
 
 cache_port = os.getenv("CACHE_PORT", default=11211)
+cache_host = os.getenv("CACHE_HOST", default='127.0.0.1')
 
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.memcached.PyMemcacheCache',
-        'LOCATION': f'127.0.0.1:{cache_port}',
+        'LOCATION': f'{cache_host}:{cache_port}',
     }
 }
 
@@ -249,7 +250,7 @@ INTERNAL_IPS = [
 
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = Path(BASE_DIR, 'media')
+MEDIA_ROOT = BASE_DIR / 'media'
 
 # Logging Settings
 
