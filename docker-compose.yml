@@ -7,7 +7,7 @@ services:
       - sinapis-app
 
   sinapis:
-    user: ${UID}
+    user: ${appuser_UID}
     build:
       context: ./daily_god
     restart: unless-stopped
