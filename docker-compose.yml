@@ -16,7 +16,7 @@ services:
       - memcached
     volumes:
       - static_volume:/app/staticfiles/
-      - media_volume:/app/mediafiles/
+      - media_volume:/app/media/
     env_file: ./daily_god/.env.prod
     networks:
       - sinapis-app
