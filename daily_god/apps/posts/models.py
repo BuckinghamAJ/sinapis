@@ -40,7 +40,7 @@ class Post(models.Model):
         if self._is_twitter is None:
             self._is_twitter = False
             if ('twitter' in str(self.url)):
-                self._is_twitter = False
+                self._is_twitter = True
         return self._is_twitter
 
 
