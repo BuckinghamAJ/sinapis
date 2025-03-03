@@ -36,7 +36,6 @@ WORKDIR /app
 
 # Copy application code
 COPY --chown=appuser:appuser . .
-RUN mkdir /app/media/profile_pics
 
 # Set environment variables to optimize Python
 ENV PYTHONDONTWRITEBYTECODE=1
