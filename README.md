@@ -29,7 +29,6 @@ Make sure you have the following installed:
 - Python 3.x
 - PostgreSQL
 - Memcached
-- Node.js and npm (for frontend dependencies)
 
 ### Installation
 
