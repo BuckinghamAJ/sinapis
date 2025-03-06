@@ -24,8 +24,7 @@ def home(request):
     page_number = request.GET.get('page', 1)
     content = home_query()
 
-    # TODO: Infinite Pagination with Scroll: https://aisaastemplate.com/blog/guide-django-pagination/
-    paginator = Paginator(content, 16) # Show 10 content per page.
+    paginator = Paginator(content, 16)
 
     pg_content = paginator.get_page(page_number)
 
@@ -34,15 +33,15 @@ def home(request):
         'content': pg_content,
     }
 
-    if request.GET.get('component') == 'sidebar':
+    if request.GET.get('component') in ('sidebar', 'end-of-home'):
         return render(request, 'content.html#content-list', context=context)
-        
+
 
     return render(request, 'index.html', context)
 
 
 def bookmarked(request):
-    
+
     content = bookmark_query_for_user(request.user)
 
     context = {
@@ -59,12 +58,12 @@ def love_content(request, type, id):
         component = request.POST.get('component')
         match component:
             case 'modal_heart_button':
-                context = {'content': context.get('post') or 
-                           context.get('quote') or 
-                           context.get('prayer'), 
+                context = {'content': context.get('post') or
+                           context.get('quote') or
+                           context.get('prayer'),
                            'type': type}
                 template = 'components/modal.html#heart-button'
-    
+
     return render(request, template, context=context)
 
 def bookmark_content(request, type, id):
@@ -74,11 +73,10 @@ def bookmark_content(request, type, id):
         component = request.POST.get('component')
         match component:
             case 'modal_bookmark_button':
-                context = {'content': context.get('post') or 
-                           context.get('quote') or 
+                context = {'content': context.get('post') or
+                           context.get('quote') or
                            context.get('prayer'),
                            'type': type}
                 template = 'components/modal.html#bookmark-button'
 
     return render(request, template, context=context)
-

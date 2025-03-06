@@ -17,15 +17,17 @@
 
         {% compress js %}
         <script src="{% static 'js/htmx.min.js' %}"></script>
+        <script src="{% static 'js/preload.js' %}"></script>
         <script src="{% static 'js/seedling.js' %}"></script>
         {% endcompress %}
 
         <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-        <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+        <!-- <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> -->
 
         {% tailwind_css %}
     </head>
-    <body>
+    <body hx-ext="preload">
         <div id="base-content" class="h-100dvh absolute w-screen"  x-data="{ close_new_post_modal() { $refs.new_post_dialog.close() },
                        close_npm_from_event(event) {
                             if (event.currentTarget === event.target) {
@@ -68,11 +70,10 @@
             });
 
             document.addEventListener('reset-new-content-forms', (event) => {
-              new_post_form = document.getElementById('post_form');
-              new_qf_form = document.getElementById('quote_prayer_form');
-
-              new_post_form.reset();
-              new_qf_form.reset();
+              htmx.ajax('GET', 'post/form/blank', {
+                      target: '#post_form', // Optional: specify where to swap the response
+                      swap: 'innerHTML', // Optional: specify the swap strategy
+                      });
             });
 
 

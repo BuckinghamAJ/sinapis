@@ -34,6 +34,8 @@ urlpatterns = [
     ### Posts ###
     path('post/<int:id>/', posts_views.get_post, name='get_post'),
     path('post/new/', posts_views.submit_new_post, name='submit_new_post'),
+    path('post/form/blank', posts_views.blank_form, name='new_blank_form'),
+
 
     ### Prayers ###
     path('prayer/<int:id>/', prayers_views.get_prayer, name='get_prayer'),

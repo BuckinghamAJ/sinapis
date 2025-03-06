@@ -2,8 +2,10 @@ from django.shortcuts import render
 from .forms import PostForm
 from .models import Post
 from django.http import HttpResponse
+from django_htmx.http import reswap, retarget, trigger_client_event
 from comments.forms import SeedCommentForm
 from django.core.cache import cache
+from django.views.decorators.cache import cache_page
 import logging
 
 logger = logging.getLogger('app')
@@ -28,8 +30,13 @@ def get_post(request, id):
 
     return None
 
-def submit_new_post(request):
+@cache_page(60 * 60 * 3)
+def blank_form(request):
+    return render(request, 'posts/new_post.html#post-form')
 
+def submit_new_post(request):
+    post = None
+    form = None
     if request.method == 'POST':
         form = PostForm(request.POST)
 
@@ -39,6 +46,14 @@ def submit_new_post(request):
             post.save(is_being_bookmarked=False, is_being_loved=False)
         else:
             logger.debug(f'Form Errors: {form.errors}')
-            context = {'errors': form.errors}
+            context = {'errors': form.errors, 'form': form}
             return render(request, 'posts/new_post.html#post-form', context)
-    return render(request, 'posts/new_post.html#post-form')
+
+    context = dict(post=post, form=form)
+
+    response = render(request, 'posts/post_content.html', context)
+    response = reswap(response, "afterbegin swap:1s")
+    response = retarget(response, "#main_content")
+    response = trigger_client_event(response, 'reset-new-content-forms', after='receive')
+
+    return response

@@ -10,6 +10,7 @@
                 name="title"
                 class="grow border-0"
                 placeholder="Title of Post*"
+                value="{{ form.title.value }}"
                 required
             />
         </label>
@@ -32,6 +33,7 @@
                 pattern="https://.*"
                 size="30"
                 required
+                value="{{ form.url.value }}"
             />
         </label>
         {% if errors.url %}
@@ -52,6 +54,7 @@
                 placeholder="Post Image URL"
                 pattern="https://.*"
                 size="30"
+                value="{{ form.image_url.value }}"
             />
         </label>
         {% if errors.image_url %}
@@ -69,7 +72,7 @@
             class="textarea textarea-bordered h-44 w-full"
             placeholder="Summarize Post*"
             required
-        ></textarea>
+        >{{ form.summary.value }}</textarea>
         {% if errors.summary %}
         <div class="alert alert-error">
             {% for error in errors.summary %}
@@ -146,7 +149,7 @@
                 name="citation"
                 class="grow border-0"
                 placeholder="Citation"
-            />
+            />{{ form.citation.value }}
         </label>
         {% if errors.citation %}
         <div class="alert alert-error">
@@ -245,7 +248,6 @@
         >
             ✕
         </button>
-        <!--TODO: Add tabs that change the form based on the tab-->
 
         <div role="tablist" class="tabs tabs-boxed mt-2">
             <a

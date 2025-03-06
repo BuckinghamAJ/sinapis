@@ -12,6 +12,7 @@
         hx-trigger="click"
         hx-swap="outerHTML"
         hx-push-url="false"
+        preload
     >
         {% if post.video %}
             {% video post.video is_secure=True as post_video %}

@@ -11,14 +11,14 @@ from django.http import HttpResponse
 from .forms import ProfileForm, UserForm
 
 import logging
-import os 
+import os
 log = logging.getLogger('app')
 
-CLOUDFARE_SITEKEY= os.getenv('CLOUDFARE_SITEKEY', "0x4AAAAAAA9VV9NxwQS-MzX9")
+CLOUDFARE_SITEKEY= os.getenv('CLOUDFARE_SITEKEY', None)
 
 # Create your views here.
 def request_signup(request):
-    
+
     if request.htmx and request.method == 'POST':
         log.debug(f"{request.POST=}")
 
@@ -72,7 +72,7 @@ def get_profile_pic(request):
     img_temp = Template("""<img id="topbar_profile_pic"
                 alt="Profile picture of user"
                 src="{{ user.profile.profile_pic.url }}" />""")
-    
+
     img_context = Context({'user': request.user})
 
     return HttpResponse(img_temp.render(img_context))
@@ -86,14 +86,14 @@ def update_profile(request):
         username = request.user.username
         user = get_user_from_username(username)
         log.debug(f"Files sent: {request.FILES}")
-        
+
         profile_form = ProfileForm(request.POST, request.FILES, instance=user.profile)
         user_form = UserForm(request.POST, instance=user)
 
         if profile_form.is_valid() and user_form.is_valid():
             profile_form.save()
             user_form.save()
-            
+
             response = render(request, 'profiles/profile.html')
 
             if request.FILES:
@@ -109,4 +109,4 @@ def update_profile(request):
             context = {'errors': errors}
             return render(request, 'profiles/profile.html', context)
 
-    return render(request, 'profiles/profile.html#profile-form', context={'profile_form': profile_form})    
+    return render(request, 'profiles/profile.html#profile-form', context={'profile_form': profile_form})

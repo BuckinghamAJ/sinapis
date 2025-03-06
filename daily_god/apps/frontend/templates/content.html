@@ -12,24 +12,26 @@
             {% endif %}
         {% endwith %}
 
-        {% if page_obj.has_next and forloop.last %}
-        <span hx-get="{% url 'articles' %}?page={{ page_obj.next_page_number }}"
+        {% if content.has_next and forloop.last %}
+        <span hx-get="{% url 'home' %}?page={{ content.next_page_number }}"
               hx-swap="beforeend" hx-target="#main_content"
               hx-push-url="false"
-              hx-trigger="revealed">
+              hx-trigger="revealed"
+              hx-vals='{"component": "end-of-home"}'
+            >
             </span>
         {% endif %}
     {% endfor %}
 {% endpartialdef content-list %}
 
 <!-- Main Section -->
-<div id="main_content" class="m-2 flex flex-wrap gap-12 column-4 h-dvh pt-8 pb-24 pl-6 overflow-y-auto justify-center" 
+<div id="main_content" class="m-2 flex flex-wrap gap-12 column-4 h-dvh pt-8 pb-24 pl-6 overflow-y-auto justify-center"
     x-data="{   close_post_content() {$refs.post_content_dialog.close()},
                 close_post_content_from_event(event) {
                     if (event.currentTarget === event.target) {
                         this.close_post_content();
                     }
-                },  
+                },
     }"
 >
     {% partial content-list %}
@@ -37,8 +39,6 @@
 
 {% include 'posts/new_post.html' %}
 
-
-<!-- TODO: Need to do this for all prayers & quotes-->
 
 <dialog id="my_post_content" class="modal" style="display: none;">
     <div class="modal-box w-11/12 max-w-4xl">

@@ -2,13 +2,15 @@
 {% load _extras %}
 
 <div id="quote_card_{{quote.id}}" class="relative w-80 h-80">
-    <a 
+    <a
         hx-get="quote/{{quote.id}}"
         hx-target="#my_post_content"
         hx-trigger="click"
         hx-swap="outerHTML"
         hx-push-url="false"
-        class="card card-compact bg-base-100 w-80 h-80 image-full shadow-xl hover:shadow-gold-glow z-0">
+        class="card card-compact bg-base-100 w-80 h-80 image-full shadow-xl hover:shadow-gold-glow z-0"
+        preload
+    >
         <figure class="h-80 bckGround-image">
         {% if 'Meditation'|check_tag:quote %}
             <img
@@ -28,7 +30,7 @@
             <div class="flex-none mt-2">
                 <span class="font-sans font-bold text-yellow-500">- {{quote.author}}</span>
             </div>
-            
+
         </div>
     </a>
     <div class="px-0 card-body w-full absolute sm:-bottom-8  z-10">

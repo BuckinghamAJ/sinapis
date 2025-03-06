@@ -1,6 +1,12 @@
 <div class="card-actions flex items-end relative bottom-0">
     <!-- Love button -->
-    <button class="btn btn-ghost btn-sm love-button" hx-get="love/{{type}}/{{id}}" hx-trigger="click" hx-swap="outerHTML" hx-push-url="false" hx-target="#{{type}}_card_{{id}}">
+    <button class="btn btn-ghost btn-sm love-button"
+        hx-get="love/{{type}}/{{id}}"
+        hx-trigger="click"
+        hx-swap="outerHTML"
+        hx-push-url="false"
+        hx-target="#{{type}}_card_{{id}}"
+    >
         {% if user in content.loved_by.all %}
             <svg  xmlns="http://www.w3.org/2000/svg" fill="#ffd700bd" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 21l-1.45-1.316C5.4 15.36 2 12.28 2 8.5 2 5.41 4.42 3 7.5 3c1.74 0 3.41 1.19 4.5 2.5C13.09 4.19 14.76 3 16.5 3 19.58 3 22 5.41 22 8.5c0 3.78-3.4 6.86-8.55 11.18L12 21Z" />
@@ -9,7 +15,7 @@
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 21l-1.45-1.316C5.4 15.36 2 12.28 2 8.5 2 5.41 4.42 3 7.5 3c1.74 0 3.41 1.19 4.5 2.5C13.09 4.19 14.76 3 16.5 3 19.58 3 22 5.41 22 8.5c0 3.78-3.4 6.86-8.55 11.18L12 21Z" />
             </svg>
-        {% endif %}          
+        {% endif %}
     </button>
     <!-- Comment button -->
     <button
@@ -25,18 +31,21 @@
     </button>
 
     <!-- Bookmark button -->
+    <button class="btn btn-ghost btn-sm ml-auto bookmark-button"
+        hx-get="bookmark/{{type}}/{{id}}"
+        hx-trigger="click"
+        hx-swap="outerHTML"
+        hx-push-url="false"
+        hx-target="#{{type}}_card_{{id}}">
     {% if user in content.bookmarked_by.all %}
-        <button class="btn btn-ghost btn-sm ml-auto bookmark-button" hx-get="bookmark/{{type}}/{{id}}" hx-trigger="click" hx-swap="outerHTML" hx-push-url="false" hx-target="#{{type}}_card_{{id}}">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="#ffd700bd" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0 1 11.186 0Z" />
-            </svg>
-        </button>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="#ffd700bd" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0 1 11.186 0Z" />
+        </svg>
     {% else %}
-        <button class="btn btn-ghost btn-sm ml-auto bookmark-button" hx-get="bookmark/{{type}}/{{id}}" hx-trigger="click" hx-swap="outerHTML" hx-push-url="false" hx-target="#{{type}}_card_{{id}}">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0 1 11.186 0Z" />
-            </svg>
-        </button>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0 1 11.186 0Z" />
+        </svg>
     {% endif %}
+    </button>
 
 </div>
