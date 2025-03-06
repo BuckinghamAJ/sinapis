@@ -1,18 +1,25 @@
 {% load static %}
+{% load compress %}
 {% load static tailwind_tags %}
 <!DOCTYPE html>
 <html data-theme="dark" style="overflow: hidden;">
     <head>
         <title>Sinapis</title>
+
+        {% compress css %}
         <link rel="stylesheet" type="text/css" href="{% static 'css/general.css' %}">
         <link rel="stylesheet" type="text/css" href="{% static 'css/sidebar.css' %}">
         <link rel="stylesheet" type="text/css" href="{% static 'css/new_post.css' %}">
         <link rel="stylesheet" type="text/css" href="{% static 'allauth_ui/output.css' %}">
+        {% endcompress %}
+
         <link rel="shortcut icon" type="image/png" href="{% static 'img/sinapis_favicon.png' %}"/>
 
-
+        {% compress js %}
         <script src="{% static 'js/htmx.min.js' %}"></script>
         <script src="{% static 'js/seedling.js' %}"></script>
+        {% endcompress %}
+
         <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
         <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
@@ -33,7 +40,7 @@
         <script>
             document.addEventListener('htmx:afterSwap', (event) => {
                 if (event.detail.target.id === 'my_post_content') {
-                document.getElementById('my_post_content').showModal();
+                  document.getElementById('my_post_content').showModal();
                 }
 
             });
@@ -59,6 +66,15 @@
                         }
                         });
             });
+
+            document.addEventListener('reset-new-content-forms', (event) => {
+              new_post_form = document.getElementById('post_form');
+              new_qf_form = document.getElementById('quote_prayer_form');
+
+              new_post_form.reset();
+              new_qf_form.reset();
+            });
+
 
             document.addEventListener('alpine:init', () => {
                 Alpine.store('seedling', {

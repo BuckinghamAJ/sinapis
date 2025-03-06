@@ -84,6 +84,7 @@ INSTALLED_APPS = [
     'embed_video',
     "widget_tweaks",
     "slippers",
+    "compressor",
 ]
 
 # Django comments Settings
@@ -91,6 +92,7 @@ COMMENTS_APP='comments'
 
 
 MIDDLEWARE = [
+    "django.middleware.gzip.GZipMiddleware",
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -233,6 +235,11 @@ STATIC_URL = 'static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
+STATICFILES_FINDERS = [
+    "django.contrib.staticfiles.finders.FileSystemFinder",
+    "django.contrib.staticfiles.finders.AppDirectoriesFinder",
+    'compressor.finders.CompressorFinder',
+]
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
