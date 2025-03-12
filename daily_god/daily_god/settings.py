@@ -101,6 +101,11 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     "django_browser_reload.middleware.BrowserReloadMiddleware",
 
+    # CACHING
+    "django.middleware.cache.UpdateCacheMiddleware",
+    "django.middleware.cache.FetchFromCacheMiddleware",
+
+
     # HTMX
     'django_htmx.middleware.HtmxMiddleware',
 
@@ -168,6 +173,8 @@ CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.memcached.PyMemcacheCache',
         'LOCATION': f'{cache_host}:{cache_port}',
+        'TIMEOUT': 60*60*3,
+        "OPTIONS": {"MAX_ENTRIES": 1000},
     }
 }
 
