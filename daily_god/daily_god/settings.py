@@ -102,8 +102,8 @@ MIDDLEWARE = [
     "django_browser_reload.middleware.BrowserReloadMiddleware",
 
     # CACHING
-    "django.middleware.cache.UpdateCacheMiddleware",
-    "django.middleware.cache.FetchFromCacheMiddleware",
+    # "django.middleware.cache.UpdateCacheMiddleware",
+    # "django.middleware.cache.FetchFromCacheMiddleware",
 
 
     # HTMX
