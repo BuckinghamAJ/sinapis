@@ -174,7 +174,7 @@ CACHES = {
         'BACKEND': 'django.core.cache.backends.memcached.PyMemcacheCache',
         'LOCATION': f'{cache_host}:{cache_port}',
         'TIMEOUT': 60*60*3,
-        "OPTIONS": {"MAX_ENTRIES": 1000},
+        # "OPTIONS": {"MAX_ENTRIES": 1000},
     }
 }
 
