@@ -2,7 +2,11 @@
 **_NOTE:_**  Sinapis is Latin for Mustard (as in the kingdom growing from the faith of a mustard seed)
 
 Welcome to the Christian content Sharing Platform! This is a personal project inspired by daily.dev where users can share Christian prayers, meditation, videos, and blog posts. Users can also comment and upvote content.
-This personal project has been in development off and on for a few months and is built using the following tech stack:
+This personal project has been in development off and on for a few months. Below is an example of it in use:
+
+
+https://github.com/user-attachments/assets/a52a3bdd-b81e-4fa2-9ff4-0855bda3f34d
+
 
 ## Tech Stack
 
